@@ -1,0 +1,73 @@
+---
+alwaysApply: true
+---
+
+# Task Manager Assignment Rules
+
+This project is a **Senior Angular Developer assignment** with specific requirements.
+
+## State Management
+
+- **Use @ngrx/signals (SignalStore)** for state management
+- Do NOT use traditional NgRx (Store/Actions/Reducers/Effects)
+- Use Angular Signals for reactive state
+- Use HTTPResource for API requests
+
+## Change Detection
+
+- **Use OnPush change detection strategy** on all components (requirement from assignment)
+- Do NOT use zoneless mode (OnPush is explicitly required)
+- Combine OnPush with Signals for optimal performance
+
+## Component Architecture
+
+- **Smart/Dumb (Presentational) component pattern**
+  - Smart components: Handle state, business logic, use SignalStore
+  - Dumb components: Pure presentation, inputs/outputs only, OnPush
+- All components must be **Standalone Components**
+- Use Angular Signals throughout
+
+## Styling
+
+- Use **Angular Material** for components
+- Use **Tailwind CSS** for custom styling
+- Implement responsive design (mobile, tablet, desktop)
+- Include loading states and skeleton screens
+- Add smooth animations and transitions
+
+## Forms
+
+- Use **Reactive Forms** only
+- Include custom validators
+- Proper error handling and display
+- Form state management with Signals
+
+## Performance
+
+- OnPush change detection on all components
+- Lazy loading for feature modules
+- Proper RxJS usage (avoid memory leaks, use takeUntilDestroyed)
+- TrackBy functions for lists
+- Code splitting
+
+## Testing
+
+- Minimum **80% code coverage**
+- Unit tests for components and services
+- Use proper mocking strategies
+
+## Code Quality
+
+- Follow Angular Style Guide
+- ESLint with Angular recommended rules
+- Prettier for formatting
+- JSDoc comments for complex logic
+- Conventional commits for Git messages
+
+## Key Requirements to Remember
+
+- Modern Angular features (v20): Signals, Standalone, HTTPResource
+- Smart/Presentational pattern
+- Performance optimization is critical
+- Testing coverage matters
+- Clean, documented code
