@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SideNav } from './core/components/side-nav/side-nav';
+import { AppHeader } from './core/components/app-header/app-header';
+import { AppFooter } from './core/components/app-footer/app-footer';
 
 /**
  * Root application component
@@ -12,7 +15,7 @@ import { RouterOutlet } from '@angular/router';
  */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, AppHeader, AppFooter, SideNav],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

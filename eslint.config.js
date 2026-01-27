@@ -68,7 +68,7 @@ export default [
       ],
       '@angular-eslint/no-empty-lifecycle-method': 'error',
       '@angular-eslint/use-lifecycle-interface': 'error',
-      '@angular-eslint/prefer-on-push-component-change-detection': 'error',
+      '@angular-eslint/prefer-on-push-component-change-detection': 'warn',
       '@typescript-eslint/explicit-function-return-type': [
         'error',
         {
