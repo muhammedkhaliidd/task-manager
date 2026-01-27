@@ -7,6 +7,7 @@ import angularTemplatePlugin from '@angular-eslint/eslint-plugin-template';
 import angularTemplateParser from '@angular-eslint/template-parser';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
+import jsdocPlugin from 'eslint-plugin-jsdoc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -42,6 +43,7 @@ export default [
       '@typescript-eslint': tseslintPlugin,
       '@angular-eslint': angularPlugin,
       prettier: prettierPlugin,
+      jsdoc: jsdocPlugin,
     },
     rules: {
       ...tsConfigs.recommended.rules,
@@ -121,6 +123,49 @@ export default [
       'no-debugger': 'error',
       'prefer-const': 'error',
       'no-var': 'error',
+      // JSDoc rules
+      'jsdoc/require-jsdoc': [
+        'warn',
+        {
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+            ClassDeclaration: true,
+            ArrowFunctionExpression: false,
+            FunctionExpression: false,
+          },
+          contexts: [
+            'TSMethodSignature',
+            'TSInterfaceDeclaration',
+            'TSTypeAliasDeclaration',
+          ],
+        },
+      ],
+      'jsdoc/require-description': [
+        'warn',
+        {
+          contexts: ['any'],
+        },
+      ],
+      'jsdoc/require-param': 'warn',
+      'jsdoc/require-param-description': 'warn',
+      'jsdoc/require-param-type': 'off', // TypeScript handles types
+      'jsdoc/require-returns': 'warn',
+      'jsdoc/require-returns-description': 'warn',
+      'jsdoc/require-returns-type': 'off', // TypeScript handles types
+      'jsdoc/check-alignment': 'warn',
+      'jsdoc/check-indentation': 'warn',
+      'jsdoc/check-param-names': 'error',
+      'jsdoc/check-tag-names': 'error',
+      'jsdoc/check-types': 'off', // TypeScript handles types
+      'jsdoc/no-types': 'warn', // Discourage types in JSDoc when using TypeScript
+      'jsdoc/tag-lines': [
+        'warn',
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
     },
   },
   // HTML templates
