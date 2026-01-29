@@ -1,10 +1,39 @@
-<aside class="side-nav p-6 flex flex-col gap-4">
-  <div class="flex items-center gap-2">
-    <i class="material-icons">home</i>
-    <span>Home</span>
-  </div>
-  <div class="flex items-center gap-2">
-    <i class="material-icons">settings</i>
-    <span>Settings</span>
-  </div>
-</aside>
+<mat-drawer-container
+  class="main-drawer-container overflow-hidden w-full flex flex-col h-screen"
+  [hasBackdrop]="drawerHasBackdrop()"
+>
+  <mat-drawer
+    #drawer
+    [mode]="drawerMode()"
+    [opened]="drawerOpened()"
+    (openedChange)="onDrawerOpenedChange($event)"
+    class="drawer-nav"
+  >
+    <nav class="side-nav-content p-4" aria-label="Main navigation">
+      <mat-nav-list class="!p-0">
+        <section class="flex flex-col gap-2">
+          @for (item of navItems; track item.id) {
+            <a
+              mat-list-item
+              [routerLink]="item.routerLink"
+              [id]="item.id"
+              routerLinkActive="active"
+              class="flex items-center !rounded-xl"
+            >
+              <mat-icon matListItemIcon class="w-[24px] h-[24px] !text-sm">{{
+                item.icon
+              }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          }
+        </section>
+      </mat-nav-list>
+    </nav>
+  </mat-drawer>
+
+  <mat-drawer-content
+    class="main-drawer-content bg-main-bg !overflow-hidden flex flex-col"
+  >
+    <ng-content />
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,44 @@
+@if (type === "icon-only") {
+  <button
+    mat-icon-button
+    type="button"
+    [attr.aria-label]="label ?? icon"
+    [color]="matColor"
+    [ngClass]="[cssClass, customColorClass]"
+    (click)="onButtonClick()"
+  >
+    <mat-icon
+      class="custom-button-icon"
+      [ngClass]="iconCssClass"
+      [fontIcon]="icon ?? ''"
+    />
+  </button>
+} @else {
+  <button
+    mat-button
+    type="button"
+    [color]="matColor"
+    [ngClass]="[cssClass, customColorClass]"
+    (click)="onButtonClick()"
+  >
+    @if (iconPosition === "before" && icon) {
+      <mat-icon
+        class="custom-button-icon"
+        [ngClass]="['iconCssClass']"
+        [fontIcon]="icon"
+      />
+    }
+    @if (label) {
+      <span class="custom-button-label" [ngClass]="labelCssClass">
+        {{ label }}
+      </span>
+    }
+    @if (iconPosition === "after" && icon) {
+      <mat-icon
+        class="custom-button-icon"
+        [ngClass]="iconCssClass"
+        [fontIcon]="icon"
+      />
+    }
+  </button>
+}

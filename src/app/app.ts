@@ -9,7 +9,8 @@ import { AppFooter } from './core/components/app-footer/app-footer';
  *
  * This is the main component that bootstraps the Angular application.
  * It serves as the container for the router outlet where all routed
- * components will be rendered.
+ * components will be rendered. Main content (header, outlet, footer) is
+ * projected into app-side-nav, which owns the drawer layout.
  *
  * Uses OnPush change detection strategy for optimal performance.
  */

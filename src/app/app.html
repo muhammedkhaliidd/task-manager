@@ -1,15 +1,15 @@
 <main class="main-container flex flex-col overflow-hidden">
   <app-app-header />
   <article class="flex flex-1 overflow-hidden">
-    <app-side-nav />
-    <section
-      class="main-content bg-main-bg mt-1 flex flex-col max-h-full flex-1 overflow-y-auto p-2"
-    >
-      <div>
-        <router-outlet />
-        <div style="height: 1200px">Main content</div>
-      </div>
-      <app-app-footer />
-    </section>
+    <app-side-nav class="w-full overflow-hidden mt-1">
+      <section
+        class="main-content flex flex-col justify-between min-h-full max-h-full flex-1 overflow-y-auto p-2"
+      >
+        <div>
+          <router-outlet />
+        </div>
+        <app-app-footer />
+      </section>
+    </app-side-nav>
   </article>
 </main>

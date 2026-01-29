@@ -1,0 +1,12 @@
+/* Host and children can be styled via cssClass, iconCssClass, labelCssClass. */
+:host {
+  display: inline-block;
+}
+
+.custom-button-icon {
+  display: inline-block;
+}
+
+.custom-button-label {
+  display: inline-block;
+}

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.main-drawer-container {
+  height: 100%;
+}
+
+.main-drawer-content {
+  min-height: 100%;
+}
+
+.drawer-nav {
+  width: 240px;
+  max-width: 85vw;
+}
+
+.side-nav-content {
+  min-width: 200px;
+}
+
+a.mdc-list-item.active {
+  background: var(--color-primary);
+
+  .mat-mdc-list-item-title {
+    color: var(--color-white) !important;
+  }
+}

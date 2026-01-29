@@ -2,6 +2,14 @@
   class="app-header py-4 px-4 md:px-6 flex items-center justify-between shadow-sm"
 >
   <section class="flex items-center gap-2">
+    <button
+      mat-icon-button
+      type="button"
+      aria-label="Toggle menu"
+      (click)="toggleDrawer()"
+    >
+      <mat-icon fontIcon="menu" />
+    </button>
     <span
       class="text-2xl rounded-lg w-[32px] h-[32px] text-[9px] bg-primary flex items-center justify-center"
       >📋</span
@@ -18,9 +26,7 @@
   </section>
 
   <section class="flex items-center gap-2">
-    <button class="btn btn-primary">
-      <i class="material-icons">notifications</i>
-    </button>
+    <app-custom-button label="🔔"> </app-custom-button>
     <button class="btn btn-primary">
       <app-letters-circle-container [sentence]="'John Doe'" />
     </button>
