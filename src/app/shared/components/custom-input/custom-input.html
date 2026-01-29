@@ -1,0 +1,57 @@
+<mat-form-field
+  class="custom-input w-full"
+  appearance="outline"
+  [ngClass]="heightClass"
+>
+  @if (label) {
+    <mat-label>{{ label }}</mat-label>
+  }
+  @if (prefixText) {
+    <span matPrefix class="mr-2 text-sm text-slate-500">
+      {{ prefixText }}
+    </span>
+  }
+  @if (prefixIcon) {
+    <button
+      matPrefix
+      type="button"
+      class="mr-1 inline-flex items-center justify-center text-slate-500"
+      tabindex="-1"
+    >
+      <mat-icon class="text-base" [fontIcon]="prefixIcon!" />
+    </button>
+  }
+
+  <input
+    matInput
+    [type]="type"
+    [formControl]="control"
+    [placeholder]="placeholder"
+    [autocomplete]="autocomplete"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    class="text-sm"
+  />
+
+  @if (suffixText) {
+    <span matSuffix class="ml-2 text-sm text-slate-500">
+      {{ suffixText }}
+    </span>
+  }
+  @if (suffixIcon) {
+    <button
+      matSuffix
+      type="button"
+      class="ml-1 inline-flex items-center justify-center text-slate-500"
+      tabindex="-1"
+    >
+      <mat-icon class="text-base" [fontIcon]="suffixIcon!" />
+    </button>
+  }
+  @if (hint && !showError) {
+    <mat-hint> {{ hint }} </mat-hint>
+  }
+  @if (showError) {
+    <mat-error>Invalid value</mat-error>
+  }
+</mat-form-field>

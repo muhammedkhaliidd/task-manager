@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /**
- *
+ * Side navigation component
  */
 @Component({
   selector: 'app-side-nav',
