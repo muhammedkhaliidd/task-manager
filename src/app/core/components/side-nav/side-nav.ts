@@ -52,12 +52,9 @@ export class SideNav {
   /**
    * Keeps drawer open on desktop and closed on mobile (initial load and on viewport resize).
    */
-  private readonly _syncDrawerToViewport = effect(
-    () => {
-      this._layoutService.setDrawerOpened(this._screenSize.isDesktop());
-    },
-    { allowSignalWrites: true },
-  );
+  private readonly _syncDrawerToViewport = effect(() => {
+    this._layoutService.setDrawerOpened(this._screenSize.isDesktop());
+  });
 
   /**
    * Sidenav mode: 'over' on mobile, 'side' on desktop.

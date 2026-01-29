@@ -3,6 +3,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
   isDevMode,
+  importProvidersFrom,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -10,6 +11,8 @@ import { routes } from './app.routes';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideHttpClient } from '@angular/common/http';
+import { CoreModule } from './core/core.module';
 
 /**
  * Application configuration for dependency injection
@@ -25,6 +28,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideHttpClient(),
+    importProvidersFrom(CoreModule),
     provideRouter(routes),
     provideEffects(),
     provideStore(),

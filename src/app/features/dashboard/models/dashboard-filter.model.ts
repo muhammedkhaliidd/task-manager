@@ -20,11 +20,11 @@ export const filterTaskStateItems: FilterTaskStateItem[] = [
   },
   {
     label: 'To Do',
-    value: 'to-do',
+    value: 'todo',
   },
   {
     label: 'In Progress',
-    value: 'in-progress',
+    value: 'in_progress',
   },
   {
     label: 'Done',

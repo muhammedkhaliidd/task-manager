@@ -89,13 +89,6 @@ export class CustomInput {
   @Input() readonly = false;
 
   /**
-   * Marks the input as disabled when true.
-   * Note: this does not modify the `FormControl` disabled state,
-   * it only affects the native input element.
-   */
-  @Input() disabled = false;
-
-  /**
    * Optional height class of the input.
    */
   @Input() heightClass = 'h-32';
