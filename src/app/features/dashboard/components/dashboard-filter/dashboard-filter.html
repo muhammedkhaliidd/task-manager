@@ -1,0 +1,14 @@
+<section class="dashboard-filter flex align-center justify-between gap-4">
+  <mat-button-toggle-group
+    name="dashboard-filter"
+    aria-label="Dashboard Filter"
+    [hideSingleSelectionIndicator]="true"
+    class="dashboard-filter-group !border-0 !rounded-none flex align-center gap-2"
+  >
+    @for (item of filterTaskStateItems; track item) {
+      <mat-button-toggle [value]="item.value" class="!border-0 !rounded-sm">
+        {{ item.label }}
+      </mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+</section>
