@@ -1,7 +1,20 @@
-@for (task of filteredTasks(); track task.id) {
-  <div class="task-card border m-3">
-    <h3>{{ task.title }}</h3>
-    <p>{{ task.description }}</p>
-    <p>{{ task.dueDate }}</p>
-  </div>
-}
+<article class="grid grid-cols-3 gap-4" cdkDropListGroup>
+  <section class="grid-item">
+    <app-tasks-category-container
+      [type]="'todo'"
+      [tasks]="todoTasks()"
+    ></app-tasks-category-container>
+  </section>
+  <section class="grid-item">
+    <app-tasks-category-container
+      [type]="'in_progress'"
+      [tasks]="inProgressTasks()"
+    ></app-tasks-category-container>
+  </section>
+  <section class="grid-item">
+    <app-tasks-category-container
+      [type]="'done'"
+      [tasks]="doneTasks()"
+    ></app-tasks-category-container>
+  </section>
+</article>

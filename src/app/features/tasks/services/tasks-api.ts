@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Http } from '../../../core/services/http';
 import { APIS } from '../../../constants/apis';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { TASKS_STORE } from '../store/tasks-store-model';
+import { TASKS_STORE } from '../store/tasks-store';
 import { Task } from '../models/tasks.model';
 
 /**

@@ -1,0 +1,15 @@
+.task-card {
+  &.cdk-drag-dragging {
+    cursor: grabbing;
+    opacity: 0.8;
+  }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-preview {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}

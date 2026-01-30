@@ -1,1 +1,15 @@
-<p>tasks-category-container works!</p>
+<article class="flex flex-col gap-4">
+  <h2>{{ type | taskStatusName }}</h2>
+  <div
+    cdkDropList
+    [cdkDropListData]="type"
+    (cdkDropListDropped)="onDrop($event)"
+    class="min-h-[120px] flex flex-col gap-4"
+  >
+    @for (task of tasks; track task.id) {
+      <div cdkDrag [cdkDragData]="task" class="cursor-grab rounded-lg">
+        <app-task-card [task]="task"></app-task-card>
+      </div>
+    }
+  </div>
+</article>

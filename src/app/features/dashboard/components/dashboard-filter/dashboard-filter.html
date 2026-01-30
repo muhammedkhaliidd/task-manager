@@ -4,6 +4,8 @@
     aria-label="Dashboard Filter"
     [hideSingleSelectionIndicator]="true"
     class="dashboard-filter-group !border-0 !rounded-none flex align-center gap-2"
+    [value]="filterType"
+    (valueChange)="onFilterTypeChange($event)"
   >
     @for (item of filterTaskStateItems; track item) {
       <mat-button-toggle [value]="item.value" class="!border-0 !rounded-sm">
