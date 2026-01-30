@@ -7,7 +7,7 @@
   >
     @for (item of filterTaskStateItems; track item) {
       <mat-button-toggle [value]="item.value" class="!border-0 !rounded-sm">
-        {{ item.label }}
+        {{ item.label | titlecase }}
       </mat-button-toggle>
     }
   </mat-button-toggle-group>

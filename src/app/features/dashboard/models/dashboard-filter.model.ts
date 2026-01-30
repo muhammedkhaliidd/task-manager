@@ -1,4 +1,5 @@
 import { TaskState } from '../../tasks/models/tasks.model';
+import { TaskStateNamePipe } from '../../tasks/pipes/task-state-name-pipe';
 
 /**
  * Filter task state type
@@ -13,21 +14,22 @@ export interface FilterTaskStateItem {
   value: FilterTaskState;
 }
 
+const taskStateNamePipe = new TaskStateNamePipe();
 export const filterTaskStateItems: FilterTaskStateItem[] = [
   {
-    label: 'All',
+    label: 'all',
     value: 'all',
   },
   {
-    label: 'To Do',
+    label: taskStateNamePipe.transform('todo'),
     value: 'todo',
   },
   {
-    label: 'In Progress',
+    label: taskStateNamePipe.transform('in_progress'),
     value: 'in_progress',
   },
   {
-    label: 'Done',
+    label: taskStateNamePipe.transform('done'),
     value: 'done',
   },
 ];
