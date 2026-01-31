@@ -1,1 +1,64 @@
-<p>task-form works!</p>
+<div class="task-form flex flex-col gap-1 p-4 overflow-y-auto max-h-full">
+  <h2 class="text-lg font-bold !p-0">
+    {{ isEditMode ? "Edit Task" : "New Task" }}
+  </h2>
+  <mat-divider></mat-divider>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="flex flex-col gap-5 py-2">
+      <app-custom-input
+        [control]="titleControl"
+        label="Title"
+        placeholder="Enter task title"
+        [type]="'text'"
+      />
+
+      <app-custom-textarea
+        [control]="descriptionControl"
+        label="Description"
+        placeholder="Enter task description"
+        [rows]="4"
+      />
+
+      <app-custom-input
+        [control]="dueDateControl"
+        label="Due Date"
+        placeholder="YYYY-MM-DD"
+        [type]="'text'"
+        hint="Format: YYYY-MM-DD"
+      />
+
+      <app-custom-select
+        [control]="priorityControl"
+        label="Priority"
+        placeholder="Select priority"
+        [options]="priorityOptions"
+      />
+
+      <app-custom-select
+        [control]="statusControl"
+        label="Status"
+        placeholder="Select status"
+        [options]="statusOptions"
+      />
+    </div>
+
+    <div class="flex items-center gap-2 pt-4">
+      <app-custom-button
+        class="flex-1"
+        type="default"
+        label="Cancel"
+        appearance="outlined"
+        cssClass="!rounded"
+        (clicked)="onCancel()"
+      />
+      <app-custom-button
+        class="flex-1"
+        type="default"
+        label="Submit"
+        color="primary"
+        cssClass="!rounded"
+        (clicked)="onSubmit()"
+      />
+    </div>
+  </form>
+</div>

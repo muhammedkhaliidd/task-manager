@@ -89,9 +89,14 @@ export class CustomInput {
   @Input() readonly = false;
 
   /**
+   * Optional clearable attribute for the input.
+   */
+  @Input() clearable = false;
+
+  /**
    * Optional height class of the input.
    */
-  @Input() heightClass = 'h-32';
+  @Input() heightClass = 'h-40';
 
   /**
    * Convenience getter to determine if current control state is invalid and should show errors.

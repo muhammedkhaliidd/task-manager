@@ -1,32 +1,49 @@
+:host {
+  width: 100%;
+}
+
 /* Minimal styling; most layout is handled via Tailwind utility classes. */
 ::ng-deep .custom-input {
+  .mat-mdc-text-field-wrapper {
+    padding: 0px;
+  }
+
+  .mat-mdc-form-field-infix {
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+
+  .mat-mdc-form-field-flex {
+    padding: 0 16px;
+  }
+
+  .mat-mdc-notch-piece.mdc-notched-outline__leading {
+    border-color: var(--color-alto);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .mat-mdc-notch-piece.mdc-notched-outline__trailing {
+    border-color: var(--color-alto);
+    border-radius: 0 4px 4px 0;
+  }
+
   &.h-32 {
     height: 32px;
-
-    .mat-mdc-form-field-infix {
-      display: flex;
-      align-items: center;
-      padding: 0;
-    }
-
-    .mat-mdc-form-field-flex {
-      padding: 0 16px;
-    }
 
     .mat-mdc-form-field-infix,
     .mat-mdc-form-field-flex {
       height: 32px !important;
       min-height: 32px !important;
     }
+  }
+  &.h-40 {
+    height: 40px;
 
-    .mat-mdc-notch-piece.mdc-notched-outline__leading {
-      border-color: var(--color-alto);
-      border-radius: 4px 0 0 4px;
-    }
-
-    .mat-mdc-notch-piece.mdc-notched-outline__trailing {
-      border-color: var(--color-alto);
-      border-radius: 0 4px 4px 0;
+    .mat-mdc-form-field-infix,
+    .mat-mdc-form-field-flex {
+      height: 40px !important;
+      min-height: 40px !important;
     }
   }
 }

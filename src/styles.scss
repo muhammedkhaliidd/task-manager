@@ -59,3 +59,7 @@ body {
   margin: 0;
   font-family: var(--font-inter);
 }
+
+.mdc-dialog__surface {
+  border-radius: 12px !important;
+}

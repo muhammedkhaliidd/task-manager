@@ -48,4 +48,18 @@ export class TasksApiService {
       }),
     );
   }
+
+  /**
+   * Create a new task
+   *
+   * @param task - The task data for creation (id, createdAt, updatedAt are added by the server)
+   * @returns The observable of the created task
+   */
+  createTask(task: Task): Observable<Task> {
+    return this._http.post<Task>(APIS.tasks, task).pipe(
+      catchError(() => {
+        return throwError(() => new Error('Failed to create task'));
+      }),
+    );
+  }
 }

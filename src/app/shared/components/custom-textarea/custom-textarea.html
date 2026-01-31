@@ -6,7 +6,7 @@
   }
   <mat-form-field
     [id]="label"
-    class="custom-input w-full"
+    class="custom-textarea w-full"
     appearance="outline"
     [ngClass]="heightClass"
   >
@@ -26,44 +26,29 @@
       </button>
     }
 
-    <input
+    <textarea
       matInput
-      [type]="type"
       [formControl]="control"
       [placeholder]="placeholder"
-      [autocomplete]="autocomplete"
       [readonly]="readonly"
-      class="!text-"
-    />
+      [rows]="rows"
+      class="text-sm resize-none"
+    ></textarea>
 
-    @if (clearable) {
-      @if (control.value) {
-        <button
-          matSuffix
-          type="button"
-          class="ml-1 inline-flex items-center justify-center text-slate-500"
-          tabindex="-1"
-          (click)="control.reset()"
-        >
-          <mat-icon class="!w-[20px] !h-[20px] !text-sm" fontIcon="close" />
-        </button>
-      }
-    } @else {
-      @if (suffixText) {
-        <span matSuffix class="ml-2 text-sm text-slate-500">
-          {{ suffixText }}
-        </span>
-      }
-      @if (suffixIcon) {
-        <button
-          matSuffix
-          type="button"
-          class="ml-1 inline-flex items-center justify-center text-slate-500"
-          tabindex="-1"
-        >
-          <mat-icon class="text-base" [fontIcon]="suffixIcon!" />
-        </button>
-      }
+    @if (suffixText) {
+      <span matSuffix class="ml-2 text-sm text-slate-500">
+        {{ suffixText }}
+      </span>
+    }
+    @if (suffixIcon) {
+      <button
+        matSuffix
+        type="button"
+        class="ml-1 inline-flex items-center justify-center text-slate-500"
+        tabindex="-1"
+      >
+        <mat-icon class="text-base" [fontIcon]="suffixIcon!" />
+      </button>
     }
     @if (hint && !showError) {
       <mat-hint> {{ hint }} </mat-hint>

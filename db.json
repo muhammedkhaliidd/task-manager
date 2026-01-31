@@ -73,7 +73,7 @@
       "id": "task-016",
       "title": "Review client feedback",
       "description": "Analyze customer feedback from user testing sessions",
-      "status": "todo",
+      "status": "in_progress",
       "priority": "medium",
       "dueDate": "2026-01-26",
       "isOverdue": true,
@@ -108,7 +108,7 @@
       "id": "task-005",
       "title": "Implement user authentication",
       "description": "Add JWT-based authentication system with refresh tokens",
-      "status": "in_progress",
+      "status": "todo",
       "priority": "high",
       "dueDate": "2026-02-01",
       "assignee": {

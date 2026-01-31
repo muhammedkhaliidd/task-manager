@@ -1,0 +1,42 @@
+/* Mirror custom-input styling for textarea */
+::ng-deep .custom-textarea {
+  .mat-mdc-form-field-subscript-wrapper {
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mat-mdc-form-field-hint-wrapper {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .mat-mdc-form-field-hint-spacer {
+    display: none;
+  }
+
+  &.min-h-\[120px\] {
+    .mat-mdc-form-field-infix {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .mat-mdc-form-field-flex {
+      padding: 0 16px;
+    }
+
+    textarea.mat-mdc-input-element {
+      min-height: 80px;
+    }
+  }
+
+  .mat-mdc-notch-piece.mdc-notched-outline__leading {
+    border-color: var(--color-alto);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .mat-mdc-notch-piece.mdc-notched-outline__trailing {
+    border-color: var(--color-alto);
+    border-radius: 0 4px 4px 0;
+  }
+}

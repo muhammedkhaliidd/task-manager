@@ -4,7 +4,7 @@
       <h2 class="text-xs font-bold tracking-wider">
         {{ type | taskStatusName | uppercase }}
       </h2>
-      <span class="text-xs bg-alto text-black rounded-full px-2 py-1">
+      <span class="text-xs bg-alto text-black font-bold rounded-full px-2 py-1">
         {{ tasks.length }}
       </span>
     </div>
@@ -18,9 +18,11 @@
     class="min-h-[120px] flex flex-col gap-4"
   >
     @if (isLoading) {
-      @for (i of [1, 2, 3]; track i) {
-        <div class="p-4 border-gray-color rounded-lg">
-          <app-skeleton [lines]="3" [lineHeight]="12"></app-skeleton>
+      @for (i of [1, 2, 3, 4]; track i) {
+        <div class="flex flex-col gap-2 p-4 border-gray-color rounded-lg">
+          <app-skeleton [lines]="2" [lineHeight]="12"></app-skeleton>
+          <mat-divider></mat-divider>
+          <app-skeleton [lines]="1" [lineHeight]="12"></app-skeleton>
         </div>
       }
     } @else if (tasks.length > 0) {

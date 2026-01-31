@@ -1,5 +1,5 @@
 <header
-  class="app-header py-4 px-4 md:px-6 flex items-center justify-between shadow-sm"
+  class="app-header py-4 px-4 md:px-6 flex items-start md:items-center justify-between shadow-sm flex-col md:flex-row gap-2"
 >
   <section class="flex items-center gap-2">
     <button
@@ -17,15 +17,19 @@
     <h1 class="text-2xl font-bold text-primary">Task Manager</h1>
   </section>
 
-  <section class="flex items-center gap-2">
+  <section class="flex items-center gap-2 !w-[320px] m-auto md:m-0">
     <app-custom-input
+      heightClass="h-32"
       placeholder="Search tasks..."
       [control]="searchControl"
       prefixText="🔍 "
+      [clearable]="true"
     />
   </section>
 
-  <section class="flex items-center gap-2">
+  <section
+    class="flex items-center gap-2 justify-center md:justify-end w-full md:w-fit"
+  >
     <app-custom-button label="🔔" appearance="text"> </app-custom-button>
     <button class="btn btn-primary">
       <app-letters-circle-container [sentence]="'John Doe'" />

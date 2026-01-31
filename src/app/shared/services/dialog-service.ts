@@ -21,10 +21,10 @@ export class DialogService {
    * @param config - The config for the dialog
    * @returns The dialog reference
    */
-  openDialog<T>(
+  openDialog<T, R>(
     component: ComponentType<T>,
-    config: MatDialogConfig<T>,
-  ): MatDialogRef<T> {
+    config: MatDialogConfig<R>,
+  ): MatDialogRef<T, R> {
     return this._dialog.open(component, config);
   }
 }
