@@ -1,5 +1,8 @@
 <p
-  class="rounded-full w-[40px] h-[40px] text-[16px] bg-primary text-white flex items-center justify-center"
+  class="rounded-full bg-primary text-white font-bold flex items-center justify-center tracking-widest"
+  [style.font-size.px]="fontSize"
+  [style.width.px]="width"
+  [style.height.px]="height"
 >
   {{ sentence | appTwoLetters }}
 </p>

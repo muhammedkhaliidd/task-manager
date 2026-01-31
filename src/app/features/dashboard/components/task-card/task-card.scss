@@ -1,0 +1,24 @@
+.task-card {
+  .priority-badge {
+    &.low {
+      background-color: var(--color-panache);
+      color: var(--color-apple);
+    }
+    &.medium {
+      background-color: var(--color-sazerac);
+      color: var(--color-gold-drop);
+    }
+    &.high {
+      background-color: var(--color-lavender-blush);
+      color: var(--color-red);
+    }
+  }
+
+  .task-card-content {
+    border-inline-start: 4px solid transparent;
+    border-radius: 8px 0 0 8px !important;
+    &.red {
+      border-inline-start-color: var(--color-red);
+    }
+  }
+}

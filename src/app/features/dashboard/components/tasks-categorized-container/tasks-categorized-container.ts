@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  Input,
   Signal,
 } from '@angular/core';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
@@ -20,8 +21,10 @@ import { TasksCategoryContainer } from '../tasks-category-container/tasks-catego
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksCategorizedContainer {
+  @Input({ required: true }) nowTimestamp!: number;
   private readonly _tasksStore = inject(TASKS_STORE);
   todoTasks: Signal<Task[]> = this._tasksStore.todoTasks;
   inProgressTasks: Signal<Task[]> = this._tasksStore.inProgressTasks;
   doneTasks: Signal<Task[]> = this._tasksStore.doneTasks;
+  tasksLoading: Signal<boolean> = this._tasksStore.tasksLoading;
 }

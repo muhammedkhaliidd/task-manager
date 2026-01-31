@@ -54,35 +54,6 @@ export const TASKS_STORE = signalStore(
         .map((t) => (t.id === taskId ? { ...t, status } : t));
       patchState(tasksStore, { tasks: updated });
     },
-    /**
-     * Moves a task to a status and inserts it at the given index within that column.
-     *
-     * @param taskId - Id of the task to move
-     * @param newStatus - Target column status (todo | in_progress | done)
-     * @param targetIndex - Index in the target column where the task should appear (0-based)
-     */
-    moveTaskToStatus: (
-      taskId: string,
-      newStatus: TaskState,
-      targetIndex: number,
-    ) => {
-      const tasks = tasksStore.tasks();
-      const task = tasks.find((t) => t.id === taskId);
-      if (!task) return;
-      const updatedTask = { ...task, status: newStatus };
-      const otherTasks = tasks.filter((t) => t.id !== taskId);
-      const indicesWithNewStatus = otherTasks
-        .map((t, i) => (t.status === newStatus ? i : -1))
-        .filter((i) => i >= 0);
-      const insertIndex =
-        indicesWithNewStatus[targetIndex] ?? otherTasks.length;
-      const newTasks = [
-        ...otherTasks.slice(0, insertIndex),
-        updatedTask,
-        ...otherTasks.slice(insertIndex),
-      ];
-      patchState(tasksStore, { tasks: newTasks });
-    },
   })),
 );
 
@@ -97,6 +68,19 @@ const filterTasks = (tasks: Task[], filter: TaskFilter): Task[] => {
   });
 };
 
+/**
+ * Categorize tasks by status and sort by due date
+ *
+ * @param tasks - The tasks to categorize
+ * @param category - The category to categorize the tasks by
+ * @returns The categorized tasks
+ */
 const categorizeTasks = (tasks: Task[], category: TaskState): Task[] => {
-  return tasks.filter((task) => task.status === category);
+  return tasks
+    .filter((task) => task.status === category)
+    .sort((a, b) => {
+      const aDueDate = new Date(a.dueDate).getTime();
+      const bDueDate = new Date(b.dueDate).getTime();
+      return aDueDate - bDueDate;
+    });
 };

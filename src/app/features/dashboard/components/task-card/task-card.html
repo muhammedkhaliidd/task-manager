@@ -1,9 +1,47 @@
-<mat-card class="!rounded-lg !shadow-none border-gray">
-  <mat-card-header>
-    <mat-card-title>{{ task.title }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{ task.description }}</p>
-    <p>{{ task.dueDate }}</p>
-  </mat-card-content>
+@let taskTimeValue = task.dueDate | taskTime: nowTimestamp;
+<mat-card
+  class="task-card !rounded-lg !shadow-none !border-gray-color"
+  [ngClass]="[taskTimeValue?.backgroundClass || '!bg-white']"
+>
+  <section
+    class="task-card-content p-4"
+    [ngClass]="taskTimeValue?.borderClass || ''"
+  >
+    <span
+      class="priority-badge text-xs flex items-center justify-center py-1 px-2 rounded font-bold h-fit w-fit tracking-wider"
+      [ngClass]="task.priority"
+      >{{ task.priority | uppercase }}</span
+    >
+    <mat-card-header class="mt-2 !p-0">
+      <mat-card-title class="!text-sm !font-semibold">{{
+        task.title
+      }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="!p-0 !flex !flex-col !gap-4 mt-1">
+      <p class="!text-xs text-gray">{{ task.description }}</p>
+      <div class="flex flex-col gap-2">
+        @if (taskTimeValue) {
+          <div class="flex items-center gap-1">
+            <span class="!text-xs text-gray">{{ taskTimeValue.icon }}</span>
+            <span class="!text-xs text-gray">{{
+              taskTimeValue.timeString
+            }}</span>
+          </div>
+        }
+        @if (task.tags.length > 0) {
+          <p class="!text-xs text-gray">{{ task.tags.join(", ") }}</p>
+        }
+      </div>
+      <mat-divider></mat-divider>
+      <div class="flex items-center gap-2">
+        <app-letters-circle-container
+          [sentence]="task.assignee.name"
+          [width]="24"
+          [height]="24"
+          [fontSize]="10"
+        ></app-letters-circle-container>
+        <p class="!text-xs">@{{ task.assignee.name.split(" ")[0] }}</p>
+      </div>
+    </mat-card-content>
+  </section>
 </mat-card>

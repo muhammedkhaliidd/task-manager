@@ -14,4 +14,7 @@ import { TwoLettersPipe } from '../../../shared/pipes/two-letters.pipe';
 })
 export class LettersCircleContainerComponent {
   @Input() sentence!: string;
+  @Input() width: number = 40;
+  @Input() height: number = 40;
+  @Input() fontSize: number = 16;
 }

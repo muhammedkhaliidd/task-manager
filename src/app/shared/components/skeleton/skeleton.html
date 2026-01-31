@@ -1,0 +1,9 @@
+<div class="skeleton-container">
+  @for (i of linesArray; track i) {
+    <div
+      class="skeleton-line"
+      [style.height.px]="lineHeight"
+      [style.width.%]="getWidthPercent(i)"
+    ></div>
+  }
+</div>

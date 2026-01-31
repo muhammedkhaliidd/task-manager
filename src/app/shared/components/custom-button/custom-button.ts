@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatButtonAppearance } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
 
@@ -75,6 +75,11 @@ export class CustomButton {
    * Optional CSS class(es) applied to the label span (default type only). Optional.
    */
   @Input() labelCssClass: string = '';
+
+  /**
+   * Optional appearance of the button.
+   */
+  @Input() appearance: MatButtonAppearance = 'filled';
 
   /**
    * Emitted when the button is clicked.

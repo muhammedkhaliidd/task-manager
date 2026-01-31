@@ -1,14 +1,40 @@
-<article class="flex flex-col gap-4">
-  <h2>{{ type | taskStatusName }}</h2>
+<article class="flex flex-col gap-4 bg-white p-4 rounded-lg">
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="text-xs font-bold tracking-wider">
+        {{ type | taskStatusName | uppercase }}
+      </h2>
+      <span class="text-xs bg-alto text-black rounded-full px-2 py-1">
+        {{ tasks.length }}
+      </span>
+    </div>
+    <mat-divider class="!border-t-[2px]"></mat-divider>
+  </div>
+
   <div
     cdkDropList
     [cdkDropListData]="type"
     (cdkDropListDropped)="onDrop($event)"
     class="min-h-[120px] flex flex-col gap-4"
   >
-    @for (task of tasks; track task.id) {
-      <div cdkDrag [cdkDragData]="task" class="cursor-grab rounded-lg">
-        <app-task-card [task]="task"></app-task-card>
+    @if (isLoading) {
+      @for (i of [1, 2, 3]; track i) {
+        <div class="p-4 border-gray-color rounded-lg">
+          <app-skeleton [lines]="3" [lineHeight]="12"></app-skeleton>
+        </div>
+      }
+    } @else if (tasks.length > 0) {
+      @for (task of tasks; track task.id) {
+        <div cdkDrag [cdkDragData]="task" class="cursor-grab rounded-lg">
+          <app-task-card
+            [task]="task"
+            [nowTimestamp]="nowTimestamp"
+          ></app-task-card>
+        </div>
+      }
+    } @else {
+      <div class="flex flex-col gap-2 m-auto">
+        <p class="text-xs text-gray text-center">No tasks found</p>
       </div>
     }
   </div>

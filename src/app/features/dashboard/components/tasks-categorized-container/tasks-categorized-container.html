@@ -1,20 +1,29 @@
-<article class="grid grid-cols-3 gap-4" cdkDropListGroup>
+<article
+  class="grid !grid-cols-1 sm:!grid-cols-2 lg:!grid-cols-3 gap-4"
+  cdkDropListGroup
+>
   <section class="grid-item">
     <app-tasks-category-container
       [type]="'todo'"
       [tasks]="todoTasks()"
+      [nowTimestamp]="nowTimestamp"
+      [isLoading]="tasksLoading()"
     ></app-tasks-category-container>
   </section>
   <section class="grid-item">
     <app-tasks-category-container
       [type]="'in_progress'"
       [tasks]="inProgressTasks()"
+      [nowTimestamp]="nowTimestamp"
+      [isLoading]="tasksLoading()"
     ></app-tasks-category-container>
   </section>
   <section class="grid-item">
     <app-tasks-category-container
       [type]="'done'"
       [tasks]="doneTasks()"
+      [nowTimestamp]="nowTimestamp"
+      [isLoading]="tasksLoading()"
     ></app-tasks-category-container>
   </section>
 </article>
