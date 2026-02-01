@@ -66,5 +66,6 @@ export interface Assignee {
 export interface TaskFilter {
   state: FilterTaskState;
   priority: TaskPriority[];
+  assigneeIds: string[];
   search: string;
 }

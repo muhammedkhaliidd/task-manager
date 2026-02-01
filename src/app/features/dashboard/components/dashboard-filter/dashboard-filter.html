@@ -30,6 +30,16 @@
       heightClass="h-40"
     />
 
+    <!-- Assignee Filter -->
+    <app-custom-select
+      class="!max-w-[140px]"
+      [control]="assigneeControl"
+      placeholder="Assignee"
+      [options]="assigneeOptions()"
+      [multiple]="true"
+      heightClass="h-40"
+    />
+
     <app-custom-button
       icon="add"
       label="New Task"

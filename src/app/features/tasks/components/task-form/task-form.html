@@ -32,6 +32,13 @@
       />
 
       <app-custom-select
+        [control]="assigneeControl"
+        label="Assignee"
+        placeholder="Select assignee"
+        [options]="assigneeOptions"
+      />
+
+      <app-custom-select
         [control]="priorityControl"
         label="Priority"
         placeholder="Select priority"

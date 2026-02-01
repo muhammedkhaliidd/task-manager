@@ -35,13 +35,7 @@ import {
   CustomSelectOption,
 } from '../../../../shared/components/custom-select/custom-select';
 import { TASKS_STORE } from '../../store/tasks-store';
-
-const DEFAULT_ASSIGNEE: Assignee = {
-  id: 'user-001',
-  name: 'John Doe',
-  avatar: 'JD',
-  email: 'john.doe@company.com',
-};
+import { TEAM_STORE } from '../../../team/store/team-store';
 
 const PRIORITIES: TaskPriority[] = ['low', 'medium', 'high'];
 const STATUSES: TaskState[] = ['todo', 'in_progress', 'done'];
@@ -76,6 +70,7 @@ const STATUS_OPTIONS: CustomSelectOption<TaskState>[] = STATUSES.map((s) => ({
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskForm implements OnInit {
+  private readonly _defaultAssigneeId = 'user-001';
   readonly form: FormGroup;
   readonly priorityOptions = PRIORITY_OPTIONS;
   readonly statusOptions = STATUS_OPTIONS;
@@ -86,11 +81,18 @@ export class TaskForm implements OnInit {
   private readonly _tasksApi = inject(TasksApiService);
   private readonly _toast = inject(ToastService);
   private readonly _tasksStore = inject(TASKS_STORE);
+  private readonly _teamStore = inject(TEAM_STORE);
+
+  protected readonly assigneeOptions: CustomSelectOption<string>[] = [];
+
   /**
    * Constructor
    */
   constructor() {
-    this.form = this._initForm();
+    this.form = this.initForm();
+    this.assigneeOptions.push(
+      ...this._teamStore.members().map((m) => ({ value: m.id, label: m.name })),
+    );
   }
 
   /**
@@ -98,11 +100,12 @@ export class TaskForm implements OnInit {
    *
    * @returns The form group
    */
-  private _initForm(): FormGroup {
+  initForm(): FormGroup {
     return this._fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: [''],
       dueDate: [null as Date | null, Validators.required],
+      assigneeId: [this._defaultAssigneeId, Validators.required],
       priority: ['medium' as TaskPriority, Validators.required],
       status: ['todo' as TaskState, Validators.required],
     });
@@ -119,6 +122,7 @@ export class TaskForm implements OnInit {
         title: task.title,
         description: task.description,
         dueDate: task.dueDate ? new Date(task.dueDate) : null,
+        assigneeId: task.assignee?.id ?? this._defaultAssigneeId,
         priority: task.priority,
         status: task.status,
       });
@@ -150,6 +154,15 @@ export class TaskForm implements OnInit {
    */
   get dueDateControl(): FormControl<Date | null> {
     return this.form.get('dueDate') as FormControl<Date | null>;
+  }
+
+  /**
+   * Get the assignee control
+   *
+   * @returns The assignee control
+   */
+  get assigneeControl(): FormControl<string | null> {
+    return this.form.get('assigneeId') as FormControl<string | null>;
   }
 
   /**
@@ -192,6 +205,9 @@ export class TaskForm implements OnInit {
     const dueDateStr = value.dueDate
       ? this._formatDateToIso(value.dueDate as Date)
       : '';
+    const assignee =
+      this._getAssigneeById(value.assigneeId) ??
+      this._getAssigneeById(this._defaultAssigneeId)!;
 
     if (this._data) {
       const task = {
@@ -199,6 +215,7 @@ export class TaskForm implements OnInit {
         title: value.title,
         description: value.description,
         dueDate: dueDateStr,
+        assignee,
         priority: value.priority,
         status: value.status,
         updatedAt: new Date().toISOString(),
@@ -221,9 +238,12 @@ export class TaskForm implements OnInit {
         id: this.idGenerator(),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        ...value,
+        title: value.title,
+        description: value.description,
         dueDate: dueDateStr,
-        assignee: DEFAULT_ASSIGNEE,
+        assignee,
+        priority: value.priority,
+        status: value.status,
         tags: [],
       };
       this._tasksApi
@@ -240,6 +260,16 @@ export class TaskForm implements OnInit {
           },
         });
     }
+  }
+
+  /**
+   * Get assignee by id from team store.
+   *
+   * @param id - Assignee id
+   * @returns Assignee or undefined
+   */
+  private _getAssigneeById(id: string): Assignee | undefined {
+    return this._teamStore.members().find((m) => m.id === id);
   }
 
   /**

@@ -67,13 +67,17 @@ export const TASKS_STORE = signalStore(
 );
 
 const filterTasks = (tasks: Task[], filter: TaskFilter): Task[] => {
-  const { state, priority, search } = filter;
+  const { state, priority, assigneeIds, search } = filter;
   return tasks.filter((task) => {
     const stateMatch = !state || state === 'all' || task.status === state;
     const priorityMatch = !priority.length || priority.includes(task.priority);
+    const assigneeMatch =
+      !assigneeIds.length || assigneeIds.includes(task.assignee.id);
     const searchMatch =
-      !search || task.title.toLowerCase().includes(search.toLowerCase());
-    return stateMatch && priorityMatch && searchMatch;
+      !search ||
+      task.title.toLowerCase().includes(search.toLowerCase()) ||
+      task.description.toLowerCase().includes(search.toLowerCase());
+    return stateMatch && priorityMatch && assigneeMatch && searchMatch;
   });
 };
 

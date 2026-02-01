@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   inject,
   OnInit,
@@ -15,12 +16,14 @@ import {
 import { TitleCasePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TASKS_STORE } from '../../../tasks/store/tasks-store';
+import { TEAM_STORE } from '../../../team/store/team-store';
 import { CustomButton } from '../../../../shared/components/custom-button/custom-button';
 import { CustomSelect } from '../../../../shared/components/custom-select/custom-select';
 import { TasksService } from '../../../tasks/services/tasks-service';
 import { TaskPriority } from '../../../tasks/models/tasks.model';
+import { CustomSelectOption } from '../../../../shared/components/custom-select/custom-select';
 
-const PRIORITY_OPTIONS: { value: TaskPriority; label: string }[] = [
+const PRIORITY_OPTIONS: CustomSelectOption<TaskPriority>[] = [
   { value: 'low', label: 'Low' },
   { value: 'medium', label: 'Medium' },
   { value: 'high', label: 'High' },
@@ -50,9 +53,21 @@ export class DashboardFilter implements OnInit {
   protected readonly priorityControl = new FormControl<TaskPriority[]>([], {
     nonNullable: true,
   });
+  protected readonly assigneeControl = new FormControl<string[]>([], {
+    nonNullable: true,
+  });
   filterType: FilterTaskState = 'all';
   private readonly _tasksStore = inject(TASKS_STORE);
+  private readonly _teamStore = inject(TEAM_STORE);
   private readonly _tasksService = inject(TasksService);
+
+  protected readonly assigneeOptions = computed<CustomSelectOption<string>[]>(
+    () =>
+      this._teamStore.members().map((m) => ({
+        value: m.id,
+        label: m.name,
+      })),
+  );
 
   /**
    * Lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.
@@ -60,6 +75,7 @@ export class DashboardFilter implements OnInit {
    */
   ngOnInit(): void {
     this.listenToPriorityChanges();
+    this.listenToAssigneeChanges();
   }
 
   /**
@@ -71,6 +87,18 @@ export class DashboardFilter implements OnInit {
       .subscribe((p) => {
         const current = this._tasksStore.filter();
         this._tasksStore.setFilter({ ...current, priority: p });
+      });
+  }
+
+  /**
+   * Listen to assignee changes
+   */
+  listenToAssigneeChanges(): void {
+    this.assigneeControl.valueChanges
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((assigneeIds) => {
+        const current = this._tasksStore.filter();
+        this._tasksStore.setFilter({ ...current, assigneeIds });
       });
   }
 

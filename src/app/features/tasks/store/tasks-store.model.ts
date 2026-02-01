@@ -20,6 +20,7 @@ export const initialTasksState: TasksState = {
   filter: {
     state: 'all',
     priority: [],
+    assigneeIds: [],
     search: '',
   },
   tasksLoading: false,
