@@ -3,7 +3,7 @@ import { Http } from '../../../core/services/http';
 import { APIS } from '../../../constants/apis';
 import { catchError, delay, Observable, of, tap, throwError } from 'rxjs';
 import { TASKS_STORE } from '../store/tasks-store';
-import { Task } from '../models/tasks.model';
+import { Task, TaskStatistic } from '../models/tasks.model';
 
 /**
  * Tasks API service
@@ -59,6 +59,26 @@ export class TasksApiService {
     return this._http.post<Task>(APIS.tasks, task).pipe(
       catchError(() => {
         return throwError(() => new Error('Failed to create task'));
+      }),
+    );
+  }
+
+  /**
+   * Get task statistics
+   *
+   * @returns The observable of the task statistics
+   */
+  getTaskStatistics(): Observable<TaskStatistic[]> {
+    this._tasksStore.setStatisticsLoading(true);
+    return this._http.get<TaskStatistic[]>(APIS.statistics).pipe(
+      delay(3000),
+      tap((statistics) => {
+        this._tasksStore.setStatistics(statistics);
+        this._tasksStore.setStatisticsLoading(false);
+      }),
+      catchError(() => {
+        this._tasksStore.setStatisticsLoading(false);
+        return of([]);
       }),
     );
   }

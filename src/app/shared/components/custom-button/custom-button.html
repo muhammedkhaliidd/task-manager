@@ -4,6 +4,7 @@
     type="button"
     [attr.aria-label]="label ?? icon"
     [color]="matColor"
+    [disabled]="disabled"
     class="w-full"
     [ngClass]="[cssClass, customColorClass]"
     (click)="onButtonClick()"
@@ -19,6 +20,7 @@
     mat-button
     [matButton]="appearance"
     type="button"
+    [disabled]="disabled"
     class="w-full"
     [color]="matColor"
     [ngClass]="[cssClass, customColorClass]"

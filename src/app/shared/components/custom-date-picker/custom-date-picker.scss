@@ -1,5 +1,5 @@
-/* Mirror custom-input styling for select */
-::ng-deep .custom-select {
+/* Mirror custom-input styling for date picker */
+::ng-deep .custom-date-picker {
   .mat-mdc-form-field-infix {
     display: flex;
     align-items: center;
@@ -8,6 +8,10 @@
 
   .mat-mdc-form-field-flex {
     padding: 0 16px;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    padding: 0px;
   }
 
   &.h-40 {
@@ -20,10 +24,6 @@
     }
   }
 
-  .mat-mdc-text-field-wrapper {
-    padding: 0px;
-  }
-
   .mat-mdc-notch-piece.mdc-notched-outline__leading {
     border-color: var(--color-alto);
     border-radius: 4px 0 0 4px;
@@ -32,5 +32,12 @@
   .mat-mdc-notch-piece.mdc-notched-outline__trailing {
     border-color: var(--color-alto);
     border-radius: 0 4px 4px 0;
+  }
+
+  .mat-datepicker-toggle {
+    .mat-mdc-icon-button {
+      width: 40px;
+      height: 40px;
+    }
   }
 }

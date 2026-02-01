@@ -28,6 +28,7 @@ export class TasksService {
       width: '500px',
       height: '500px',
       data: task,
+      autoFocus: false,
     });
   }
 

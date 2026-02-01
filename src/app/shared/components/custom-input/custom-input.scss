@@ -4,6 +4,7 @@
 
 /* Minimal styling; most layout is handled via Tailwind utility classes. */
 ::ng-deep .custom-input {
+  --mat-form-field-outlined-outline-color: var(--color-alto);
   .mat-mdc-text-field-wrapper {
     padding: 0px;
   }

@@ -17,6 +17,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { CustomDatePicker } from '../../../../shared/components/custom-date-picker/custom-date-picker';
 import { CustomInput } from '../../../../shared/components/custom-input/custom-input';
 import { CustomButton } from '../../../../shared/components/custom-button/custom-button';
 import { TasksApiService } from '../../services/tasks-api-service';
@@ -33,6 +34,7 @@ import {
   CustomSelect,
   CustomSelectOption,
 } from '../../../../shared/components/custom-select/custom-select';
+import { TASKS_STORE } from '../../store/tasks-store';
 
 const DEFAULT_ASSIGNEE: Assignee = {
   id: 'user-001',
@@ -65,6 +67,7 @@ const STATUS_OPTIONS: CustomSelectOption<TaskState>[] = STATUSES.map((s) => ({
     MatDividerModule,
     CustomInput,
     CustomButton,
+    CustomDatePicker,
     CustomTextarea,
     CustomSelect,
   ],
@@ -82,15 +85,24 @@ export class TaskForm implements OnInit {
   private readonly _fb = inject(FormBuilder);
   private readonly _tasksApi = inject(TasksApiService);
   private readonly _toast = inject(ToastService);
-
+  private readonly _tasksStore = inject(TASKS_STORE);
   /**
    * Constructor
    */
   constructor() {
-    this.form = this._fb.group({
+    this.form = this._initForm();
+  }
+
+  /**
+   * Initialize the form
+   *
+   * @returns The form group
+   */
+  private _initForm(): FormGroup {
+    return this._fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: [''],
-      dueDate: ['', Validators.required],
+      dueDate: [null as Date | null, Validators.required],
       priority: ['medium' as TaskPriority, Validators.required],
       status: ['todo' as TaskState, Validators.required],
     });
@@ -101,13 +113,14 @@ export class TaskForm implements OnInit {
    * It is called after the constructor and called  before the first ngOnChanges()
    */
   ngOnInit(): void {
-    if (this._data) {
+    if (this._data?.task) {
+      const task = this._data.task;
       this.form.patchValue({
-        title: this._data.task?.title,
-        description: this._data.task?.description,
-        dueDate: this._data.task?.dueDate,
-        priority: this._data.task?.priority,
-        status: this._data.task?.status,
+        title: task.title,
+        description: task.description,
+        dueDate: task.dueDate ? new Date(task.dueDate) : null,
+        priority: task.priority,
+        status: task.status,
       });
     }
   }
@@ -135,8 +148,8 @@ export class TaskForm implements OnInit {
    *
    * @returns The due date control
    */
-  get dueDateControl(): FormControl {
-    return this.form.get('dueDate') as FormControl;
+  get dueDateControl(): FormControl<Date | null> {
+    return this.form.get('dueDate') as FormControl<Date | null>;
   }
 
   /**
@@ -176,18 +189,27 @@ export class TaskForm implements OnInit {
     }
 
     const value = this.form.getRawValue();
+    const dueDateStr = value.dueDate
+      ? this._formatDateToIso(value.dueDate as Date)
+      : '';
 
     if (this._data) {
+      const task = {
+        ...this._data.task,
+        title: value.title,
+        description: value.description,
+        dueDate: dueDateStr,
+        priority: value.priority,
+        status: value.status,
+        updatedAt: new Date().toISOString(),
+      } as Task;
       this._tasksApi
-        .replaceTask(this._data.task?.id as string, {
-          ...this._data,
-          ...value,
-          updatedAt: new Date().toISOString(),
-        })
+        .replaceTask(this._data.task?.id as string, task)
         .pipe(take(1))
         .subscribe({
           next: () => {
             this._toast.showToast('Task updated successfully');
+            this._tasksStore.updateTask(task);
             this._dialogRef.close(true);
           },
           error: () => {
@@ -200,6 +222,7 @@ export class TaskForm implements OnInit {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         ...value,
+        dueDate: dueDateStr,
         assignee: DEFAULT_ASSIGNEE,
         tags: [],
       };
@@ -209,6 +232,7 @@ export class TaskForm implements OnInit {
         .subscribe({
           next: () => {
             this._toast.showToast('Task created successfully');
+            this._tasksStore.addTask(task);
             this._dialogRef.close(true);
           },
           error: () => {
@@ -216,6 +240,19 @@ export class TaskForm implements OnInit {
           },
         });
     }
+  }
+
+  /**
+   * Format a Date to YYYY-MM-DD string.
+   *
+   * @param date - The date to format
+   * @returns ISO date string (YYYY-MM-DD)
+   */
+  private _formatDateToIso(date: Date): string {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
   }
 
   /**

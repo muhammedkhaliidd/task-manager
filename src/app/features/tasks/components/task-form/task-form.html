@@ -1,9 +1,15 @@
-<div class="task-form flex flex-col gap-1 p-4 overflow-y-auto max-h-full">
-  <h2 class="text-lg font-bold !p-0">
-    {{ isEditMode ? "Edit Task" : "New Task" }}
-  </h2>
-  <mat-divider></mat-divider>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<article class="task-form flex flex-col gap-1 py-4 max-h-full">
+  <section class="flex flex-col gap-1 px-4">
+    <h2 class="text-lg font-bold !p-0">
+      {{ isEditMode ? "Edit Task" : "New Task" }}
+    </h2>
+    <mat-divider></mat-divider>
+  </section>
+  <form
+    [formGroup]="form"
+    class="flex-1 overflow-y-auto px-4"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="flex flex-col gap-5 py-2">
       <app-custom-input
         [control]="titleControl"
@@ -19,12 +25,10 @@
         [rows]="4"
       />
 
-      <app-custom-input
+      <app-custom-date-picker
         [control]="dueDateControl"
         label="Due Date"
-        placeholder="YYYY-MM-DD"
-        [type]="'text'"
-        hint="Format: YYYY-MM-DD"
+        placeholder="Choose a date"
       />
 
       <app-custom-select
@@ -41,24 +45,24 @@
         [options]="statusOptions"
       />
     </div>
-
-    <div class="flex items-center gap-2 pt-4">
-      <app-custom-button
-        class="flex-1"
-        type="default"
-        label="Cancel"
-        appearance="outlined"
-        cssClass="!rounded"
-        (clicked)="onCancel()"
-      />
-      <app-custom-button
-        class="flex-1"
-        type="default"
-        label="Submit"
-        color="primary"
-        cssClass="!rounded"
-        (clicked)="onSubmit()"
-      />
-    </div>
   </form>
-</div>
+  <section class="flex items-center gap-2 pt-4 px-4">
+    <app-custom-button
+      class="flex-1"
+      type="default"
+      label="Cancel"
+      appearance="outlined"
+      cssClass="!rounded"
+      (clicked)="onCancel()"
+    />
+    <app-custom-button
+      class="flex-1"
+      type="default"
+      label="Submit"
+      color="primary"
+      cssClass="!rounded"
+      [disabled]="form.invalid"
+      (clicked)="onSubmit()"
+    />
+  </section>
+</article>

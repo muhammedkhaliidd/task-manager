@@ -1,0 +1,11 @@
+.change-text {
+  &.positive {
+    color: var(--color-apple);
+  }
+  &.negative {
+    color: var(--color-red);
+  }
+  &.neutral {
+    color: var(--color-gray);
+  }
+}

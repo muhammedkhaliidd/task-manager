@@ -297,6 +297,40 @@
       "tags": ["Maintenance"],
       "createdAt": "2026-01-15T20:30:34.116Z",
       "updatedAt": "2026-01-24T20:30:34.116Z"
+    },
+    {
+      "id": "task-8nnw6hocv3r",
+      "createdAt": "2026-02-01T10:48:09.767Z",
+      "updatedAt": "2026-02-01T10:48:09.767Z",
+      "title": "Task from the Dashboard #1",
+      "description": "Task from the Dashboard #1 description",
+      "dueDate": "2026-02-11",
+      "priority": "medium",
+      "status": "todo",
+      "assignee": {
+        "id": "user-001",
+        "name": "John Doe",
+        "avatar": "JD",
+        "email": "john.doe@company.com"
+      },
+      "tags": []
+    },
+    {
+      "id": "task-p9bk399m53m",
+      "createdAt": "2026-02-01T10:48:33.083Z",
+      "updatedAt": "2026-02-01T10:48:33.083Z",
+      "title": "Task from the Dashboard #2",
+      "description": "Task from the Dashboard #2 desc",
+      "dueDate": "2025-12-01",
+      "priority": "medium",
+      "status": "todo",
+      "assignee": {
+        "id": "user-001",
+        "name": "John Doe",
+        "avatar": "JD",
+        "email": "john.doe@company.com"
+      },
+      "tags": []
     }
   ],
   "statistics": [

@@ -34,9 +34,21 @@ export interface Task {
 /**
  * Task statistics interface
  */
-export interface TaskStatistics {
-  totalTasks: number;
+export interface TaskStatistic {
+  id: string;
+  title: string;
+  icon: string;
+  value: number;
+  change: string;
+  changeLabel: string;
+  changeType: TaskStatisticChangeType;
+  color: string;
 }
+
+/**
+ * Task statistic change type
+ */
+export type TaskStatisticChangeType = 'positive' | 'negative' | 'neutral';
 
 /**
  * Assignee interface

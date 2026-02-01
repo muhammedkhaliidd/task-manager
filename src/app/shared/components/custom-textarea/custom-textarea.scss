@@ -1,5 +1,10 @@
 /* Mirror custom-input styling for textarea */
 ::ng-deep .custom-textarea {
+  min-height: fit-content;
+  .mat-mdc-text-field-wrapper {
+    padding: 0px;
+  }
+
   .mat-mdc-form-field-subscript-wrapper {
     min-height: 0;
     padding: 0;
@@ -15,10 +20,10 @@
     display: none;
   }
 
-  &.min-h-\[120px\] {
+  &.min-h-40 {
     .mat-mdc-form-field-infix {
-      padding-top: 12px;
-      padding-bottom: 12px;
+      padding-top: 4px;
+      padding-bottom: 4px;
     }
 
     .mat-mdc-form-field-flex {
@@ -26,7 +31,7 @@
     }
 
     textarea.mat-mdc-input-element {
-      min-height: 80px;
+      min-height: 40px;
     }
   }
 

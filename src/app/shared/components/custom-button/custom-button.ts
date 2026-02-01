@@ -82,6 +82,11 @@ export class CustomButton {
   @Input() appearance: MatButtonAppearance = 'filled';
 
   /**
+   * Whether the button is disabled.
+   */
+  @Input() disabled = false;
+
+  /**
    * Emitted when the button is clicked.
    */
   @Output() clicked = new EventEmitter<void>();

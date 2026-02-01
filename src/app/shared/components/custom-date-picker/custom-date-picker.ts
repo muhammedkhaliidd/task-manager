@@ -1,49 +1,42 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { NgClass } from '@angular/common';
 
 /**
- * Option item for the select.
- */
-export interface CustomSelectOption<T = unknown> {
-  value: T;
-  label: string;
-}
-
-/**
- * Reusable select component built on top of Angular Material.
+ * Reusable date picker component built on top of Angular Material.
  * Mirrors custom-input styling with mat-form-field outline appearance.
  *
  * Features:
- * - Accepts an external reactive `FormControl`
- * - Supports configurable label, placeholder, and options
+ * - Accepts an external reactive `FormControl` (Date | null)
+ * - Supports configurable label and placeholder
  * - Optional prefix/suffix (text or Material icon)
  * - Fully OnPush and standalone
  */
 @Component({
-  selector: 'app-custom-select',
+  selector: 'app-custom-date-picker',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
+    MatDatepickerModule,
     MatIconModule,
     NgClass,
   ],
-  templateUrl: './custom-select.html',
-  styleUrl: './custom-select.scss',
+  templateUrl: './custom-date-picker.html',
+  styleUrl: './custom-date-picker.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomSelect {
+export class CustomDatePicker {
   /**
-   * External reactive form control driving the select value and validation state.
+   * External reactive form control driving the date value and validation state.
+   * Expects Date | null.
    */
-  @Input({ required: true }) control!: FormControl<unknown>;
+  @Input({ required: true }) control!: FormControl<Date | null>;
 
   /**
    * Floating label displayed inside the form field.
@@ -51,17 +44,12 @@ export class CustomSelect {
   @Input() label?: string;
 
   /**
-   * Placeholder shown when no option is selected.
+   * Placeholder text shown when no date is selected.
    */
-  @Input() placeholder = 'Select an option';
+  @Input() placeholder = 'Choose a date';
 
   /**
-   * Options to display. Each has value and label.
-   */
-  @Input() options: CustomSelectOption[] = [];
-
-  /**
-   * Optional hint text shown below the select.
+   * Optional hint text shown below the date picker.
    */
   @Input() hint?: string;
 
@@ -86,9 +74,19 @@ export class CustomSelect {
   @Input() suffixIcon?: string;
 
   /**
-   * Optional height class for the select container.
+   * Optional height class for the date picker container.
    */
   @Input() heightClass = 'h-40';
+
+  /**
+   * Minimum selectable date.
+   */
+  @Input() min?: Date;
+
+  /**
+   * Maximum selectable date.
+   */
+  @Input() max?: Date;
 
   /**
    * Determines if error state should be shown.

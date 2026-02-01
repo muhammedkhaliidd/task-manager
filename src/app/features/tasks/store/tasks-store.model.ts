@@ -1,11 +1,11 @@
-import { Task, TaskFilter, TaskStatistics } from '../models/tasks.model';
+import { Task, TaskFilter, TaskStatistic } from '../models/tasks.model';
 
 /**
  * Tasks state interface
  */
 export interface TasksState {
   tasks: Task[];
-  statistics: TaskStatistics;
+  statistics: TaskStatistic[];
   filter: TaskFilter;
   tasksLoading: boolean;
   statisticsLoading: boolean;
@@ -16,9 +16,7 @@ export interface TasksState {
  */
 export const initialTasksState: TasksState = {
   tasks: [],
-  statistics: {
-    totalTasks: 0,
-  },
+  statistics: [],
   filter: {
     state: 'all',
     priority: [],

@@ -83,7 +83,7 @@ export class CustomTextarea {
   /**
    * Optional height class for the textarea container.
    */
-  @Input() heightClass = 'min-h-[120px]';
+  @Input() heightClass = 'min-h-40';
 
   /**
    * Determines if error state should be shown.

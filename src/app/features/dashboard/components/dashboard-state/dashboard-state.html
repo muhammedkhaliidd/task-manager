@@ -1,1 +1,18 @@
-<p>dashboard-state works!</p>
+<section class="shadow-md rounded-lg p-6 flex bg-white">
+  <div class="flex flex-col gap-6">
+    <div class="flex items-center gap-1">
+      <span class="text-xs">{{ statistic.icon }}</span>
+      <h3 class="text-xs font-medium text-gray">{{ statistic.title }}</h3>
+    </div>
+    <div class="flex flex-col gap-1">
+      <h3 class="text-2xl font-bold">{{ statistic.value }}</h3>
+      <span
+        class="change-text text-xs text-apple"
+        [ngClass]="statistic.changeType"
+      >
+        {{ +statistic.change ? statistic.change : "" }}
+        {{ statistic.changeLabel }}</span
+      >
+    </div>
+  </div>
+</section>

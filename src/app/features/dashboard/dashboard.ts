@@ -35,6 +35,7 @@ export class Dashboard implements OnInit {
    */
   ngOnInit(): void {
     this.getTasks();
+    this.getStatistics();
     this.handleNowInterval();
   }
 
@@ -55,6 +56,16 @@ export class Dashboard implements OnInit {
   getTasks(): void {
     this._tasksApi
       .getTasks()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe();
+  }
+
+  /**
+   * Get statistics
+   */
+  getStatistics(): void {
+    this._tasksApi
+      .getTaskStatistics()
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe();
   }

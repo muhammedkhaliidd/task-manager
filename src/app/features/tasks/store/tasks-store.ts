@@ -10,7 +10,7 @@ import {
   Task,
   TaskFilter,
   TaskState,
-  TaskStatistics,
+  TaskStatistic,
 } from '../models/tasks.model';
 import { computed } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
@@ -36,7 +36,7 @@ export const TASKS_STORE = signalStore(
     setTasks: (tasks: Task[]) => {
       patchState(tasksStore, { tasks });
     },
-    setStatistics: (statistics: TaskStatistics) => {
+    setStatistics: (statistics: TaskStatistic[]) => {
       patchState(tasksStore, { statistics });
     },
     setFilter: (filter: TaskFilter) => {
@@ -52,6 +52,15 @@ export const TASKS_STORE = signalStore(
       const updated = tasksStore
         .tasks()
         .map((t) => (t.id === taskId ? { ...t, status } : t));
+      patchState(tasksStore, { tasks: updated });
+    },
+    addTask: (task: Task) => {
+      patchState(tasksStore, { tasks: [...tasksStore.tasks(), task] });
+    },
+    updateTask: (task: Task) => {
+      const updated = tasksStore
+        .tasks()
+        .map((t) => (t.id === task.id ? task : t));
       patchState(tasksStore, { tasks: updated });
     },
   })),
