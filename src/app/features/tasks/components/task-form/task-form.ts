@@ -256,7 +256,7 @@ export class TaskForm implements OnInit {
             this._dialogRef.close(true);
           },
           error: () => {
-            this._toast.showToast('Failed to create task', 4000);
+            this._toast.showToast('Failed to create task', 4000, 'error');
           },
         });
     }

@@ -6,7 +6,7 @@
     [color]="matColor"
     [disabled]="disabled"
     class="w-full"
-    [ngClass]="[cssClass, customColorClass]"
+    [ngClass]="[cssClass, customColorClass, warnClass]"
     (click)="onButtonClick()"
   >
     <mat-icon
@@ -23,7 +23,7 @@
     [disabled]="disabled"
     class="w-full"
     [color]="matColor"
-    [ngClass]="[cssClass, customColorClass]"
+    [ngClass]="[cssClass, customColorClass, warnClass]"
     (click)="onButtonClick()"
   >
     @if (iconPosition === "before" && icon) {

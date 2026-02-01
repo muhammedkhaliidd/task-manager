@@ -115,6 +115,15 @@ export class CustomButton {
   }
 
   /**
+   * Class for warn styling (M3 theme ignores color attribute, so we use CSS).
+   *
+   * @returns CSS class when color is warn, empty string otherwise
+   */
+  protected get warnClass(): string {
+    return this.color === 'warn' ? 'custom-button--warn' : '';
+  }
+
+  /**
    * Custom color class when color is not a Material theme color.
    *
    * @returns CSS class string or undefined

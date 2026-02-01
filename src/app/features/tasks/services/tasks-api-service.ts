@@ -1,9 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable } from '@angular/core';
 import { Http } from '../../../core/services/http';
 import { APIS } from '../../../constants/apis';
 import { catchError, delay, Observable, of, tap, throwError } from 'rxjs';
 import { TASKS_STORE } from '../store/tasks-store';
-import { Task, TaskStatistic } from '../models/tasks.model';
+import { Task } from '../models/tasks.model';
+import { httpResource } from '@angular/common/http';
 
 /**
  * Tasks API service
@@ -12,8 +13,29 @@ import { Task, TaskStatistic } from '../models/tasks.model';
   providedIn: 'root',
 })
 export class TasksApiService {
+  readonly tasksResource = httpResource<Task[]>(() => APIS.tasks);
   private readonly _http = inject(Http);
   private readonly _tasksStore = inject(TASKS_STORE);
+
+  /** Initializes resource sync effect to populate the store */
+  constructor() {
+    this._syncTasksResource();
+  }
+
+  /** Sync tasks from httpResource to store */
+  private _syncTasksResource(): void {
+    effect(() => {
+      const resource = this.tasksResource;
+      this._tasksStore.setTasksLoading(resource.isLoading());
+      if (resource.hasValue()) {
+        this._tasksStore.setTasks(resource.value());
+      } else if (resource.error()) {
+        this._tasksStore.setTasks([]);
+        this._tasksStore.setTasksLoading(false);
+      }
+    });
+  }
+
   /**
    * Get tasks
    *
@@ -50,6 +72,24 @@ export class TasksApiService {
   }
 
   /**
+   * Delete a task
+   *
+   * @param taskId - Id of the task to delete
+   * @returns The observable
+   */
+  deleteTask(taskId: string): Observable<void> {
+    return this._http.delete<void>(APIS.tasks + '/' + taskId).pipe(
+      tap(() => {
+        const tasks = this._tasksStore.tasks().filter((t) => t.id !== taskId);
+        this._tasksStore.setTasks(tasks);
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Failed to delete task'));
+      }),
+    );
+  }
+
+  /**
    * Create a new task
    *
    * @param task - The task data for creation (id, createdAt, updatedAt are added by the server)
@@ -59,26 +99,6 @@ export class TasksApiService {
     return this._http.post<Task>(APIS.tasks, task).pipe(
       catchError(() => {
         return throwError(() => new Error('Failed to create task'));
-      }),
-    );
-  }
-
-  /**
-   * Get task statistics
-   *
-   * @returns The observable of the task statistics
-   */
-  getTaskStatistics(): Observable<TaskStatistic[]> {
-    this._tasksStore.setStatisticsLoading(true);
-    return this._http.get<TaskStatistic[]>(APIS.statistics).pipe(
-      delay(3000),
-      tap((statistics) => {
-        this._tasksStore.setStatistics(statistics);
-        this._tasksStore.setStatisticsLoading(false);
-      }),
-      catchError(() => {
-        this._tasksStore.setStatisticsLoading(false);
-        return of([]);
       }),
     );
   }

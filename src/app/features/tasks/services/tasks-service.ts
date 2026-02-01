@@ -3,9 +3,10 @@ import { Task, TaskState } from '../models/tasks.model';
 import { DialogService } from '../../../shared/services/dialog-service';
 import { TaskForm } from '../components/task-form/task-form';
 import { TASKS_STORE } from '../store/tasks-store';
-import { catchError, take, throwError } from 'rxjs';
+import { catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { TasksApiService } from './tasks-api-service';
 import { ToastService } from '../../../shared/services/toast-service';
+import { InteractionsService } from '../../../shared/services/interactions-service';
 
 /**
  * Tasks service
@@ -18,6 +19,41 @@ export class TasksService {
   private readonly _tasksStore = inject(TASKS_STORE);
   private readonly _tasksApi = inject(TasksApiService);
   private readonly _toastService = inject(ToastService);
+  private readonly _interactions = inject(InteractionsService);
+
+  /**
+   * Delete a task with confirmation.
+   *
+   * @param task - The task to delete
+   */
+  deleteTask(task: Task): void {
+    this._interactions
+      .showConfirmation({
+        title: 'Delete Task',
+        message: `Are you sure you want to delete "${task.title}"?`,
+        confirmLabel: 'Delete',
+        cancelLabel: 'Cancel',
+        confirmColor: 'warn',
+      })
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this._tasksApi.deleteTask(task.id)),
+        take(1),
+      )
+      .subscribe({
+        next: () => {
+          this._toastService.showToast(
+            'Task deleted successfully',
+            3000,
+            'default',
+          );
+        },
+        error: () => {
+          this._toastService.showToast('Failed to delete task', 4000, 'error');
+        },
+      });
+  }
+
   /**
    * Open the task form modal
    *
@@ -86,7 +122,7 @@ export class TasksService {
       updatedTask,
       ...tasks.slice(originalIndex + 1),
     ];
-    this._toastService.showToast('Failed to replace task');
+    this._toastService.showToast('Failed to replace task', 4000, 'error');
     this._tasksStore.setTasks(newTasks);
   }
 }

@@ -24,6 +24,7 @@ html {
       color: (
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
+        warn: mat.$red-palette,
       ),
       typography: Roboto,
       density: 0,
@@ -62,4 +63,36 @@ body {
 
 .mdc-dialog__surface {
   border-radius: 8px !important;
+}
+
+/* Toast: white background, shadow, colored left border */
+.toast {
+  --mat-sys-inverse-surface: #fff !important;
+  color: var(--mat-sys-on-surface, #1f2937) !important;
+  // box-shadow:
+  //   0 4px 6px -1px rgb(0 0 0 / 0.1),
+  //   0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  border-left: 12px solid transparent;
+  border-radius: 6px 0 0 6px;
+
+  .mdc-snackbar__surface {
+    border-radius: 0px 4px 4px 0px !important;
+  }
+
+  .mat-mdc-snack-bar-label,
+  .mat-mdc-button {
+    color: var(--color-black) !important;
+    font-size: 14px !important;
+  }
+  &.toast.toast--default {
+    border-left-color: var(--mat-sys-primary, #1976d2) !important;
+  }
+
+  &.toast.toast--warn {
+    border-left-color: var(--mat-sys-error, #d32f2f) !important;
+  }
+
+  &.toast.toast--error {
+    border-left-color: var(--mat-sys-error, #d32f2f) !important;
+  }
 }

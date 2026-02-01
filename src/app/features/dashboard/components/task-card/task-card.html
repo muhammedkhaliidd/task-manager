@@ -7,11 +7,21 @@
     class="task-card-content p-4"
     [ngClass]="taskTimeValue?.borderClass || ''"
   >
-    <span
-      class="priority-badge text-xs flex items-center justify-center py-1 px-2 rounded font-bold h-fit w-fit tracking-wider"
-      [ngClass]="task.priority"
-      >{{ task.priority | uppercase }}</span
-    >
+    <div class="flex items-start justify-between gap-2">
+      <span
+        class="priority-badge text-xs flex items-center justify-center py-1 px-2 rounded font-bold h-fit w-fit tracking-wider"
+        [ngClass]="task.priority"
+        >{{ task.priority | uppercase }}</span
+      >
+      <app-custom-button
+        type="icon-only"
+        icon="delete_outline"
+        cssClass="!w-[36px] !h-[36px] !min-w-[36px] !p-1 !-mt-1 !-mr-1"
+        iconCssClass="!w-[18px] !h-[18px] !text-xl !text-red"
+        (click)="$event.stopPropagation()"
+        (clicked)="onDelete()"
+      />
+    </div>
     <mat-card-header class="mt-2 !p-0">
       <mat-card-title class="!text-sm !font-semibold">{{
         task.title

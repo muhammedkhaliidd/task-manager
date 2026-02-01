@@ -6,3 +6,30 @@
 .custom-button-label {
   display: inline-block;
 }
+
+/* M3 theme ignores color attribute; use theme error tokens for warn variant */
+button.custom-button--warn.mdc-button {
+  background-color: var(--mat-sys-error);
+  color: var(--mat-sys-on-error);
+
+  .mat-mdc-button-persistent-ripple::before {
+    background-color: var(--mat-sys-on-error);
+  }
+
+  &:hover {
+    background-color: color-mix(
+      in srgb,
+      var(--mat-sys-error) 90%,
+      var(--mat-sys-on-error) 10%
+    );
+  }
+}
+
+button.custom-button--warn.mat-mdc-icon-button {
+  background-color: transparent;
+  color: var(--mat-sys-error);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--mat-sys-error) 12%, transparent);
+  }
+}

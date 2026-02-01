@@ -13,7 +13,7 @@ import { TasksApiService } from '../tasks/services/tasks-api-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
 
-const NOW_INTERVAL = 1000;
+const NOW_INTERVAL = 60 * 1000; // 1 minute
 
 /**
  * Dashboard component
@@ -34,8 +34,6 @@ export class Dashboard implements OnInit {
    * Lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.
    */
   ngOnInit(): void {
-    this.getTasks();
-    this.getStatistics();
     this.handleNowInterval();
   }
 
@@ -48,25 +46,5 @@ export class Dashboard implements OnInit {
       .subscribe(() => {
         this.nowTimestamp.set(Date.now());
       });
-  }
-
-  /**
-   * Get tasks
-   */
-  getTasks(): void {
-    this._tasksApi
-      .getTasks()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe();
-  }
-
-  /**
-   * Get statistics
-   */
-  getStatistics(): void {
-    this._tasksApi
-      .getTaskStatistics()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe();
   }
 }

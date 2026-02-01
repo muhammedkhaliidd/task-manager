@@ -42,4 +42,14 @@ export class Http {
   put<T>(url: string, body: unknown): Observable<T> {
     return this._http.put<T>(url, body);
   }
+
+  /**
+   * Delete request
+   *
+   * @param url - The URL to delete
+   * @returns The observable
+   */
+  delete<T>(url: string): Observable<T> {
+    return this._http.delete<T>(url);
+  }
 }

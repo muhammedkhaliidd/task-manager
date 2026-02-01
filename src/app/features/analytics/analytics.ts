@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { StatisticsApiService } from '../tasks/services/statistics-api-service';
 
 /**
  * Analytics component
@@ -10,4 +11,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './analytics.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Analytics {}
+export class Analytics {
+  /** Injected to trigger statistics fetch and sync to store when visiting analytics */
+  private readonly _statisticsApi = inject(StatisticsApiService);
+}

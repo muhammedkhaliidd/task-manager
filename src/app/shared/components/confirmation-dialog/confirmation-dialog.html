@@ -1,0 +1,22 @@
+<div class="confirmation-dialog">
+  <h2 mat-dialog-title class="!text-lg !font-bold">{{ data.title }}</h2>
+  <mat-dialog-content>
+    <p class="text-slate-600">{{ data.message }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="!flex !justify-end !gap-2 !p-4 !pt-2">
+    <app-custom-button
+      type="default"
+      [label]="cancelLabel"
+      appearance="outlined"
+      cssClass="!rounded !h-[32px]"
+      (clicked)="onCancel()"
+    />
+    <app-custom-button
+      type="default"
+      [label]="confirmLabel"
+      [color]="confirmColor"
+      cssClass="!rounded !h-[32px]"
+      (clicked)="onConfirm()"
+    />
+  </mat-dialog-actions>
+</div>
