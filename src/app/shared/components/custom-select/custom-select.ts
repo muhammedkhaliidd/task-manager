@@ -91,6 +91,11 @@ export class CustomSelect {
   @Input() heightClass = 'h-40';
 
   /**
+   * Whether multiple options can be selected.
+   */
+  @Input() multiple = false;
+
+  /**
    * Determines if error state should be shown.
    *
    * @returns True if the control is invalid and touched or dirty, false otherwise.

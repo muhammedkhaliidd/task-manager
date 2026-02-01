@@ -20,6 +20,16 @@
   </mat-button-toggle-group>
 
   <div class="flex items-center gap-2">
+    <!-- Priority Filter -->
+    <app-custom-select
+      class="!max-w-[120px]"
+      [control]="priorityControl"
+      placeholder="Priority"
+      [options]="priorityOptions"
+      [multiple]="true"
+      heightClass="h-40"
+    />
+
     <app-custom-button
       icon="add"
       label="New Task"
