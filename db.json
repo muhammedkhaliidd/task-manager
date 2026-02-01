@@ -266,7 +266,7 @@
       "id": "task-013",
       "title": "Security audit",
       "description": "Conduct comprehensive security review of the application",
-      "status": "done",
+      "status": "in_progress",
       "priority": "high",
       "dueDate": "2026-01-24",
       "completedAt": "2026-01-25T20:30:34.116Z",
@@ -284,7 +284,7 @@
       "id": "task-014",
       "title": "Update dependencies",
       "description": "Update all npm packages to latest stable versions",
-      "status": "done",
+      "status": "in_progress",
       "priority": "low",
       "dueDate": "2026-01-23",
       "completedAt": "2026-01-24T20:30:34.116Z",
@@ -316,55 +316,21 @@
       "tags": []
     },
     {
-      "id": "task-uhc558obwpj",
-      "createdAt": "2026-02-01T15:06:58.127Z",
-      "updatedAt": "2026-02-01T15:06:58.127Z",
-      "title": "fwef",
-      "description": "wefewf",
-      "dueDate": "2026-02-28",
+      "id": "task-hxrgrknevag",
+      "createdAt": "2026-02-01T16:12:45.862Z",
+      "updatedAt": "2026-02-01T16:12:45.862Z",
+      "title": "Task From The dashboard #1",
+      "description": "Task From The dashboard #1 description",
+      "dueDate": "2026-02-20",
       "assignee": {
-        "id": "user-001",
-        "name": "John Doe",
-        "avatar": "JD",
-        "email": "john.doe@company.com"
+        "id": "user-002",
+        "name": "Sarah Smith",
+        "avatar": "SS",
+        "email": "sarah.smith@company.com"
       },
-      "priority": "medium",
+      "priority": "high",
       "status": "todo",
-      "tags": []
-    },
-    {
-      "id": "task-k9goy19kf7e",
-      "createdAt": "2026-02-01T15:33:22.038Z",
-      "updatedAt": "2026-02-01T15:33:22.038Z",
-      "title": "dfhdfgb",
-      "description": "gdrtgdrf",
-      "dueDate": "2026-02-28",
-      "assignee": {
-        "id": "user-001",
-        "name": "John Doe",
-        "avatar": "JD",
-        "email": "john.doe@company.com"
-      },
-      "priority": "medium",
-      "status": "todo",
-      "tags": []
-    },
-    {
-      "id": "task-7n8kt2yt5en",
-      "createdAt": "2026-02-01T15:41:11.401Z",
-      "updatedAt": "2026-02-01T15:41:11.401Z",
-      "title": "efew",
-      "description": "fefwefwe",
-      "dueDate": "2026-02-28",
-      "assignee": {
-        "id": "user-001",
-        "name": "John Doe",
-        "avatar": "JD",
-        "email": "john.doe@company.com"
-      },
-      "priority": "medium",
-      "status": "todo",
-      "tags": []
+      "tags": ["Tag 1", "Tag 2"]
     }
   ],
   "statistics": [

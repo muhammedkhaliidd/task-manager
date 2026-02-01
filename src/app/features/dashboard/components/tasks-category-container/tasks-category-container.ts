@@ -38,13 +38,17 @@ export class TasksCategoryContainer {
   @Input() isLoading: boolean = false;
   private readonly _tasksService = inject(TasksService);
   /**
-   * Handles drop events when a task is moved; updates task status and order so it appears at the drop index.
+   * Handles drop events when a task is moved between columns.
+   * Ignores drops within the same column (tasks are ordered by date).
    *
-   * @param event - The CDK drag-drop event (container data is this column's TaskState, currentIndex is the drop index)
+   * @param event - The CDK drag-drop event
    */
   onDrop(event: CdkDragDrop<TaskState, Task>): void {
     const task = event.item.data as Task;
-    const newStatus = event.container.data;
+    const newStatus = event.container.data as TaskState;
+    if (task.status === newStatus) {
+      return; /* Same column – no reorder, ordered by date */
+    }
     const targetIndex = event.currentIndex;
     const originalIndex = event.previousIndex;
     this._tasksService.moveTaskToStatus(
