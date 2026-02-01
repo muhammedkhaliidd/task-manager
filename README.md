@@ -27,14 +27,14 @@ Task Manager is a Senior Angular application for managing tasks with a modern, s
 
 ### Architecture Decisions
 
-| Decision | Rationale |
-|----------|-----------|
-| **Standalone components** | Aligns with Angular v20 and improves tree-shaking |
-| **OnPush change detection** | Reduces change detection cycles and improves performance |
-| **NgRx SignalStore** | Reactive, fine-grained updates without boilerplate |
-| **Smart/Dumb component pattern** | Clear separation of business logic and presentation |
-| **Lazy-loaded feature routes** | Smaller initial bundle and faster first load |
-| **Functional HTTP interceptors** | Modern, tree-shakeable approach for caching and retry |
+| Decision                          | Rationale                                                  |
+| --------------------------------- | ---------------------------------------------------------- |
+| **Standalone components**         | Aligns with Angular v20 and improves tree-shaking          |
+| **OnPush change detection**       | Reduces change detection cycles and improves performance   |
+| **NgRx SignalStore**              | Reactive, fine-grained updates without boilerplate         |
+| **Smart/Dumb component pattern**  | Clear separation of business logic and presentation        |
+| **Lazy-loaded feature routes**    | Smaller initial bundle and faster first load               |
+| **Functional HTTP interceptors**  | Modern, tree-shakeable approach for caching and retry      |
 | **httpResource for GET requests** | Eager, signal-based fetching with automatic sync to stores |
 
 ### Project Structure
@@ -96,11 +96,11 @@ The application uses a constants file for API configuration instead of environme
 Edit `src/app/constants/apis.ts`:
 
 ```typescript
-const API_URL = 'http://localhost:3000';  // Change for production
+const API_URL = "http://localhost:3000"; // Change for production
 
 export const APIS = {
-  tasks: API_URL + '/tasks',
-  statistics: API_URL + '/statistics',
+  tasks: API_URL + "/tasks",
+  statistics: API_URL + "/statistics",
 };
 ```
 
@@ -115,19 +115,19 @@ Add the `X-Skip-Cache: true` header to any GET request to bypass the cache inter
 
 ## Available Scripts and Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Starts json-server (port 3000) and Angular dev server (port 4200) concurrently |
-| `npm run api` | Runs json-server only (`--watch db.json --port 3000`) |
-| `ng serve` | Starts Angular dev server (requires API running separately for full functionality) |
-| `npm run build` | Production build; output in `dist/task-manager` |
-| `npm run watch` | Development build with watch mode |
-| `npm test` | Runs unit tests (Karma + Jasmine) |
-| `npm run lint` | Runs ESLint on `src/**/*.{ts,html}` |
-| `npm run lint:fix` | Runs ESLint with auto-fix |
-| `npm run format` | Formats code with Prettier |
-| `npm run format:check` | Checks formatting without writing |
-| `npm run prepare` | Runs automatically on `npm install`; configures Husky for pre-commit hooks |
+| Command                | Description                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------- |
+| `npm start`            | Starts json-server (port 3000) and Angular dev server (port 4200) concurrently     |
+| `npm run api`          | Runs json-server only (`--watch db.json --port 3000`)                              |
+| `ng serve`             | Starts Angular dev server (requires API running separately for full functionality) |
+| `npm run build`        | Production build; output in `dist/task-manager`                                    |
+| `npm run watch`        | Development build with watch mode                                                  |
+| `npm test`             | Runs unit tests (Karma + Jasmine)                                                  |
+| `npm run lint`         | Runs ESLint on `src/**/*.{ts,html}`                                                |
+| `npm run lint:fix`     | Runs ESLint with auto-fix                                                          |
+| `npm run format`       | Formats code with Prettier                                                         |
+| `npm run format:check` | Checks formatting without writing                                                  |
+| `npm run prepare`      | Runs automatically on `npm install`; configures Husky for pre-commit hooks         |
 
 ---
 
@@ -174,15 +174,15 @@ Stores use `withState`, `withComputed`, and `withMethods` for reactive updates. 
 
 ## Performance Optimization Techniques
 
-| Technique | Implementation |
-|-----------|----------------|
-| **OnPush change detection** | All components use `ChangeDetectionStrategy.OnPush` |
-| **Lazy loading** | Feature routes use `loadComponent()` for code splitting |
-| **HTTP response caching** | Cache interceptor caches GET responses for 5 minutes; mutating requests invalidate cache |
-| **Computed signals** | Derived state (e.g. filtered tasks) uses `computed()` for memoization |
-| **Event coalescing** | `provideZoneChangeDetection({ eventCoalescing: true })` |
-| **trackBy / track** | Lists use `track` in `@for` to minimize DOM updates |
-| **Skeleton loaders** | Loading states use skeleton components to improve perceived performance |
+| Technique                   | Implementation                                                                           |
+| --------------------------- | ---------------------------------------------------------------------------------------- |
+| **OnPush change detection** | All components use `ChangeDetectionStrategy.OnPush`                                      |
+| **Lazy loading**            | Feature routes use `loadComponent()` for code splitting                                  |
+| **HTTP response caching**   | Cache interceptor caches GET responses for 5 minutes; mutating requests invalidate cache |
+| **Computed signals**        | Derived state (e.g. filtered tasks) uses `computed()` for memoization                    |
+| **Event coalescing**        | `provideZoneChangeDetection({ eventCoalescing: true })`                                  |
+| **trackBy / track**         | Lists use `track` in `@for` to minimize DOM updates                                      |
+| **Skeleton loaders**        | Loading states use skeleton components to improve perceived performance                  |
 
 ---
 
