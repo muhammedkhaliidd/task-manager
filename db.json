@@ -248,7 +248,7 @@
       "id": "task-012",
       "title": "Refactor payment module",
       "description": "Clean up and optimize payment processing code",
-      "status": "done",
+      "status": "in_progress",
       "priority": "medium",
       "dueDate": "2026-01-25",
       "completedAt": "2026-01-26T20:30:34.116Z",
