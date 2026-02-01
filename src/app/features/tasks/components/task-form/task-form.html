@@ -51,6 +51,47 @@
         placeholder="Select status"
         [options]="statusOptions"
       />
+
+      <!-- Tags -->
+      <div class="flex flex-col gap-2">
+        <label for="tags" class="text-sm text-slate-600 font-medium">
+          Tags (max 5)
+        </label>
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter a tag"
+            [value]="newTagInput()"
+            (input)="onTagInputChange($any($event.target).value)"
+            (keydown)="onTagInputKeydown($event)"
+            [disabled]="isMaxTagsReached"
+          />
+          <button
+            type="button"
+            class="px-3 py-2 text-sm bg-primary text-white rounded hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+            [disabled]="!newTagInput() || isMaxTagsReached"
+            (click)="addTag()"
+          >
+            Add
+          </button>
+        </div>
+        @if (tagsArray.length > 0) {
+          <mat-chip-set class="mt-1">
+            @for (tag of tagsArray.controls; track $index) {
+              <mat-chip-row (removed)="removeTag($index)">
+                {{ tag.value }}
+                <button matChipRemove aria-label="Remove tag">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-set>
+        }
+        @if (isMaxTagsReached) {
+          <span class="text-xs text-orange-500">Maximum 5 tags reached</span>
+        }
+      </div>
     </div>
   </form>
   <section class="flex items-center gap-2 pt-4 px-4">

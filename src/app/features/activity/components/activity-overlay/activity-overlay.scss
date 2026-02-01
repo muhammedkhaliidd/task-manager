@@ -1,0 +1,18 @@
+/* Host: display contents so overlay renders as app-level sibling */
+:host {
+  display: contents;
+}
+
+/* Slide-in animation (no Tailwind equivalent for custom keyframes) */
+.activity-overlay-panel {
+  animation: activity-overlay-slide-in 0.25s ease-out;
+}
+
+@keyframes activity-overlay-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

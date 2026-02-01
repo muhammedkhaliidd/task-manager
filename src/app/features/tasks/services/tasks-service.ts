@@ -7,6 +7,7 @@ import { catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { TasksApiService } from './tasks-api-service';
 import { ToastService } from '../../../shared/services/toast-service';
 import { InteractionsService } from '../../../shared/services/interactions-service';
+import { ActivityService } from '../../activity/services/activity-service';
 
 /**
  * Tasks service
@@ -20,6 +21,7 @@ export class TasksService {
   private readonly _tasksApi = inject(TasksApiService);
   private readonly _toastService = inject(ToastService);
   private readonly _interactions = inject(InteractionsService);
+  private readonly _activityService = inject(ActivityService);
 
   /**
    * Delete a task with confirmation.
@@ -46,6 +48,12 @@ export class TasksService {
             'Task deleted successfully',
             3000,
             'default',
+          );
+          this._activityService.recordDeleted(
+            task.id,
+            task.title,
+            task.assignee.name,
+            task.assignee.id,
           );
         },
         error: () => {
@@ -106,7 +114,17 @@ export class TasksService {
           return throwError(() => new Error('Failed to replace task'));
         }),
       )
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this._activityService.recordStatusChanged(
+            taskId,
+            updatedTask.title,
+            updatedTask.assignee.name,
+            updatedTask.assignee.id,
+            newStatus,
+          );
+        },
+      });
   }
 
   /**

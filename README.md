@@ -1,67 +1,192 @@
 # TaskManager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.4.
+Angular 20 task management application.
 
-## Development server
+## Project Overview and Architecture Decisions
 
-To start a local development server, run:
+Task Manager is a Senior Angular application for managing tasks with a modern, signal-based architecture.
 
-```bash
-ng serve
+### Key Technologies
+
+- **Angular 20** – Standalone components, Signals, OnPush change detection
+- **NgRx Signals** – SignalStore for state management (no traditional NgRx Store/Actions/Reducers)
+- **Angular Material** – UI components and theming
+- **Tailwind CSS** – Utility-first styling
+- **Chart.js / ng2-charts** – Analytics and task distribution charts
+- **json-server** – Mock REST API for development
+
+### Architecture Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| **Standalone components** | Aligns with Angular v20 and improves tree-shaking |
+| **OnPush change detection** | Reduces change detection cycles and improves performance |
+| **NgRx SignalStore** | Reactive, fine-grained updates without boilerplate |
+| **Smart/Dumb component pattern** | Clear separation of business logic and presentation |
+| **Lazy-loaded feature routes** | Smaller initial bundle and faster first load |
+| **Functional HTTP interceptors** | Modern, tree-shakeable approach for caching and retry |
+| **httpResource for GET requests** | Eager, signal-based fetching with automatic sync to stores |
+
+### Project Structure
+
+```
+src/app/
+├── constants/          # API endpoints and shared constants
+├── core/               # Core module, interceptors, layout services
+├── features/           # Feature modules (dashboard, tasks, team, analytics, etc.)
+├── shared/             # Reusable components, pipes, validators, services
+└── app.config.ts       # Root application configuration
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Setup and Installation Instructions
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Prerequisites
 
-```bash
-ng generate component component-name
+- **Node.js** 18.x or 20.x
+- **npm** 9.x or later
+
+### Installation
+
+1. Clone the repository and navigate to the project directory:
+
+   ```bash
+   cd task-manager
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the application (see [Available scripts and commands](#available-scripts-and-commands)).
+
+---
+
+## Environment Configuration
+
+The application uses a constants file for API configuration instead of environment files.
+
+### API Configuration
+
+Edit `src/app/constants/apis.ts`:
+
+```typescript
+const API_URL = 'http://localhost:3000';  // Change for production
+
+export const APIS = {
+  tasks: API_URL + '/tasks',
+  statistics: API_URL + '/statistics',
+};
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Development**: json-server runs on `http://localhost:3000` and serves `db.json`
+- **Production**: Update `API_URL` to your backend base URL before building
 
-```bash
-ng generate --help
-```
+### Bypassing Cache
 
-## Building
+Add the `X-Skip-Cache: true` header to any GET request to bypass the cache interceptor.
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## Available Scripts and Commands
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+| Command | Description |
+|---------|-------------|
+| `npm start` | Starts json-server (port 3000) and Angular dev server (port 4200) concurrently |
+| `npm run api` | Runs json-server only (`--watch db.json --port 3000`) |
+| `ng serve` | Starts Angular dev server (requires API running separately for full functionality) |
+| `npm run build` | Production build; output in `dist/task-manager` |
+| `npm run watch` | Development build with watch mode |
+| `npm test` | Runs unit tests (Karma + Jasmine) |
+| `npm run lint` | Runs ESLint on `src/**/*.{ts,html}` |
+| `npm run lint:fix` | Runs ESLint with auto-fix |
+| `npm run format` | Formats code with Prettier |
+| `npm run format:check` | Checks formatting without writing |
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Design Patterns and State Management
 
-```bash
-ng test
-```
+### State Management (NgRx SignalStore)
 
-## Running end-to-end tests
+- **TASKS_STORE** (`features/tasks/store/`): Tasks, statistics, filters, loading states; computed signals for filtered and categorized tasks
+- **TEAM_STORE** (`features/team/store/`): Team members and loading state
 
-For end-to-end (e2e) testing, run:
+Stores use `withState`, `withComputed`, and `withMethods` for reactive updates. No Actions, Reducers, or Effects.
 
-```bash
-ng e2e
-```
+### Smart vs. Dumb Components
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- **Smart components**: Use SignalStore, handle business logic, coordinate API calls (e.g. `Dashboard`, `DashboardFilter`, `TaskForm`)
+- **Dumb components**: Pure presentation, inputs/outputs only (e.g. `TaskCard`, `CustomInput`, `LettersCircleContainer`)
+
+### API Services
+
+- **TasksApiService**: Fetches tasks via `httpResource`, syncs to `TASKS_STORE`; handles create, update, delete
+- **StatisticsApiService**: Fetches statistics via `httpResource`, syncs to `TASKS_STORE`
+
+### Reactive Forms
+
+- Forms use `FormControl`, `FormGroup`, `FormArray` with custom validators
+- Example: `maxArrayLength(5)` for tags validation
+
+---
+
+## Testing Strategy
+
+- **Framework**: Jasmine + Karma
+- **Coverage**: Aim for 80%+ on components and services
+- **Mocking**: Use `TestBed`, `HttpTestingController`, and stub services
+- **Lint**: ESLint (including JSDoc rules) is run via `npm run lint`
+
+### Test Organization
+
+- Unit tests: `*.spec.ts` next to each component/service
+- Interceptor tests: `cache.interceptor.spec.ts`, `retry.interceptor.spec.ts`
+
+---
+
+## Performance Optimization Techniques
+
+| Technique | Implementation |
+|-----------|----------------|
+| **OnPush change detection** | All components use `ChangeDetectionStrategy.OnPush` |
+| **Lazy loading** | Feature routes use `loadComponent()` for code splitting |
+| **HTTP response caching** | Cache interceptor caches GET responses for 5 minutes; mutating requests invalidate cache |
+| **Computed signals** | Derived state (e.g. filtered tasks) uses `computed()` for memoization |
+| **Event coalescing** | `provideZoneChangeDetection({ eventCoalescing: true })` |
+| **trackBy / track** | Lists use `track` in `@for` to minimize DOM updates |
+| **Skeleton loaders** | Loading states use skeleton components to improve perceived performance |
+
+---
+
+## Known Limitations and Future Improvements
+
+### Known Limitations
+
+- API base URL is hardcoded in constants (no `.env` support)
+- Cache is in-memory only; cleared on page refresh
+- No offline or PWA support
+- No real-time collaboration or WebSocket updates
+- json-server is for development only; not suitable for production
+
+### Future Improvements
+
+- [ ] Environment-based configuration (e.g. `environment.ts` or `.env`)
+- [ ] Persistent cache (e.g. IndexedDB) for better offline experience
+- [ ] End-to-end tests (Cypress or Playwright)
+- [ ] Virtual scrolling for large task lists
+- [ ] Internationalization (i18n)
+- [ ] Dark mode toggle
+- [ ] Export tasks (CSV/PDF)
+- [ ] Real backend integration with authentication
+
+---
 
 ## Documentation
 
-This project follows comprehensive documentation standards:
-
-- **JSDoc**: All complex logic is documented with JSDoc comments
-- **Standards**: See [docs/JSDOC_GUIDE.md](docs/JSDOC_GUIDE.md) for documentation guidelines
-- **Enforcement**: ESLint validates JSDoc compliance (run `npm run lint`)
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **JSDoc**: Complex logic is documented with JSDoc comments
+- **Standards**: [docs/JSDOC_GUIDE.md](docs/JSDOC_GUIDE.md)
+- **Enforcement**: `npm run lint`

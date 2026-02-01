@@ -3,8 +3,10 @@ import {
   Component,
   inject,
   OnInit,
+  signal,
 } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -36,7 +38,12 @@ import {
 } from '../../../../shared/components/custom-select/custom-select';
 import { TASKS_STORE } from '../../store/tasks-store';
 import { TEAM_STORE } from '../../../team/store/team-store';
+import { ActivityService } from '../../../activity/services/activity-service';
+import { maxArrayLength } from '../../../../shared/validators';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
+const MAX_TAGS = 5;
 const PRIORITIES: TaskPriority[] = ['low', 'medium', 'high'];
 const STATUSES: TaskState[] = ['todo', 'in_progress', 'done'];
 
@@ -59,6 +66,8 @@ const STATUS_OPTIONS: CustomSelectOption<TaskState>[] = STATUSES.map((s) => ({
     ReactiveFormsModule,
     MatDialogModule,
     MatDividerModule,
+    MatChipsModule,
+    MatIconModule,
     CustomInput,
     CustomButton,
     CustomDatePicker,
@@ -82,8 +91,10 @@ export class TaskForm implements OnInit {
   private readonly _toast = inject(ToastService);
   private readonly _tasksStore = inject(TASKS_STORE);
   private readonly _teamStore = inject(TEAM_STORE);
+  private readonly _activityService = inject(ActivityService);
 
   protected readonly assigneeOptions: CustomSelectOption<string>[] = [];
+  protected readonly newTagInput = signal('');
 
   /**
    * Constructor
@@ -108,6 +119,7 @@ export class TaskForm implements OnInit {
       assigneeId: [this._defaultAssigneeId, Validators.required],
       priority: ['medium' as TaskPriority, Validators.required],
       status: ['todo' as TaskState, Validators.required],
+      tags: this._fb.array<string>([], [maxArrayLength(MAX_TAGS)]),
     });
   }
 
@@ -126,6 +138,15 @@ export class TaskForm implements OnInit {
         priority: task.priority,
         status: task.status,
       });
+      // Populate existing tags
+      if (task.tags?.length) {
+        this.tagsArray.clear();
+        for (const tag of task.tags) {
+          this.tagsArray.push(
+            this._fb.control(tag, { nonNullable: true }) as FormControl<string>,
+          );
+        }
+      }
     }
   }
 
@@ -184,6 +205,75 @@ export class TaskForm implements OnInit {
   }
 
   /**
+   * Get the tags FormArray
+   *
+   * @returns The tags array
+   */
+  get tagsArray(): FormArray<FormControl<string>> {
+    return this.form.get('tags') as FormArray<FormControl<string>>;
+  }
+
+  /**
+   * Check if max tags reached
+   *
+   * @returns True if max tags reached
+   */
+  get isMaxTagsReached(): boolean {
+    return this.tagsArray.length >= MAX_TAGS;
+  }
+
+  /**
+   * Add a new tag to the array
+   */
+  addTag(): void {
+    const tag = this.newTagInput().trim();
+    if (!tag) return;
+    if (this.isMaxTagsReached) return;
+    // Avoid duplicates
+    const existingTags = this.tagsArray.controls.map((c) =>
+      c.value.toLowerCase(),
+    );
+    if (existingTags.includes(tag.toLowerCase())) {
+      this.newTagInput.set('');
+      return;
+    }
+    this.tagsArray.push(
+      this._fb.control(tag, { nonNullable: true }) as FormControl<string>,
+    );
+    this.newTagInput.set('');
+  }
+
+  /**
+   * Remove a tag at index
+   *
+   * @param index - Index of tag to remove
+   */
+  removeTag(index: number): void {
+    this.tagsArray.removeAt(index);
+  }
+
+  /**
+   * Handle tag input change
+   *
+   * @param value - New input value
+   */
+  onTagInputChange(value: string): void {
+    this.newTagInput.set(value);
+  }
+
+  /**
+   * Handle keydown on tag input (add on Enter)
+   *
+   * @param event - Keyboard event
+   */
+  onTagInputKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.addTag();
+    }
+  }
+
+  /**
    * Get the edit mode
    *
    * @returns The edit mode
@@ -209,6 +299,8 @@ export class TaskForm implements OnInit {
       this._getAssigneeById(value.assigneeId) ??
       this._getAssigneeById(this._defaultAssigneeId)!;
 
+    const tags = this.tagsArray.value;
+
     if (this._data) {
       const task = {
         ...this._data.task,
@@ -218,6 +310,7 @@ export class TaskForm implements OnInit {
         assignee,
         priority: value.priority,
         status: value.status,
+        tags,
         updatedAt: new Date().toISOString(),
       } as Task;
       this._tasksApi
@@ -227,6 +320,12 @@ export class TaskForm implements OnInit {
           next: () => {
             this._toast.showToast('Task updated successfully');
             this._tasksStore.updateTask(task);
+            this._activityService.recordUpdated(
+              task.id,
+              task.title,
+              task.assignee.name,
+              task.assignee.id,
+            );
             this._dialogRef.close(true);
           },
           error: () => {
@@ -244,7 +343,7 @@ export class TaskForm implements OnInit {
         assignee,
         priority: value.priority,
         status: value.status,
-        tags: [],
+        tags,
       };
       this._tasksApi
         .createTask(task)
@@ -253,6 +352,12 @@ export class TaskForm implements OnInit {
           next: () => {
             this._toast.showToast('Task created successfully');
             this._tasksStore.addTask(task);
+            this._activityService.recordCreated(
+              task.id,
+              task.title,
+              task.assignee.name,
+              task.assignee.id,
+            );
             this._dialogRef.close(true);
           },
           error: () => {

@@ -21,7 +21,7 @@
       "id": "task-002",
       "title": "Update documentation",
       "description": "Review and update API documentation for v2.0 release",
-      "status": "todo",
+      "status": "in_progress",
       "priority": "medium",
       "dueDate": "2026-02-03",
       "assignee": {
@@ -125,7 +125,7 @@
       "id": "task-006",
       "title": "Optimize database queries",
       "description": "Review and optimize slow queries identified in performance audit",
-      "status": "in_progress",
+      "status": "done",
       "priority": "medium",
       "dueDate": "2026-02-02",
       "assignee": {
@@ -159,7 +159,7 @@
       "id": "task-008",
       "title": "Add dark mode support",
       "description": "Implement theme toggle with dark/light mode preferences",
-      "status": "in_progress",
+      "status": "todo",
       "priority": "medium",
       "dueDate": "2026-02-04",
       "assignee": {
@@ -194,7 +194,7 @@
       "id": "task-009",
       "title": "Fix critical login bug",
       "description": "Resolved issue preventing users from logging in on mobile devices",
-      "status": "done",
+      "status": "in_progress",
       "priority": "high",
       "dueDate": "2026-01-28",
       "completedAt": "2026-01-29T20:30:34.116Z",
@@ -316,12 +316,46 @@
       "tags": []
     },
     {
-      "id": "task-dm1h9s7l7bm",
-      "createdAt": "2026-02-01T12:20:52.966Z",
-      "updatedAt": "2026-02-01T12:20:52.966Z",
-      "title": "ghndg",
-      "description": "yfdhnty",
-      "dueDate": "2026-02-27",
+      "id": "task-uhc558obwpj",
+      "createdAt": "2026-02-01T15:06:58.127Z",
+      "updatedAt": "2026-02-01T15:06:58.127Z",
+      "title": "fwef",
+      "description": "wefewf",
+      "dueDate": "2026-02-28",
+      "assignee": {
+        "id": "user-001",
+        "name": "John Doe",
+        "avatar": "JD",
+        "email": "john.doe@company.com"
+      },
+      "priority": "medium",
+      "status": "todo",
+      "tags": []
+    },
+    {
+      "id": "task-k9goy19kf7e",
+      "createdAt": "2026-02-01T15:33:22.038Z",
+      "updatedAt": "2026-02-01T15:33:22.038Z",
+      "title": "dfhdfgb",
+      "description": "gdrtgdrf",
+      "dueDate": "2026-02-28",
+      "assignee": {
+        "id": "user-001",
+        "name": "John Doe",
+        "avatar": "JD",
+        "email": "john.doe@company.com"
+      },
+      "priority": "medium",
+      "status": "todo",
+      "tags": []
+    },
+    {
+      "id": "task-7n8kt2yt5en",
+      "createdAt": "2026-02-01T15:41:11.401Z",
+      "updatedAt": "2026-02-01T15:41:11.401Z",
+      "title": "efew",
+      "description": "fefwefwe",
+      "dueDate": "2026-02-28",
       "assignee": {
         "id": "user-001",
         "name": "John Doe",

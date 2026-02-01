@@ -30,7 +30,7 @@ This project is a **Senior Angular Developer assignment** with specific requirem
 ## Styling
 
 - Use **Angular Material** for components
-- Use **Tailwind CSS** for custom styling
+- Use **Tailwind CSS** for custom styling (where applicable and needed)
 - Implement responsive design (mobile, tablet, desktop)
 - Include loading states and skeleton screens
 - Add smooth animations and transitions

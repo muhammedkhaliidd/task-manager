@@ -1,4 +1,15 @@
 .task-card {
+  border: 1px solid var(--color-alto);
+  transition: border-color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    border-color: var(--color-primary);
+    &.red {
+      border-color: var(--color-red);
+    }
+  }
+
   .priority-badge {
     &.low {
       background-color: var(--color-panache);

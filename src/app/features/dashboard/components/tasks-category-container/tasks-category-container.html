@@ -19,7 +19,12 @@
   >
     @if (tasks.length > 0) {
       @for (task of tasks; track task.id) {
-        <div cdkDrag [cdkDragData]="task" class="cursor-grab rounded-lg">
+        <div
+          cdkDrag
+          [cdkDragData]="task"
+          cdkDragBoundary=".tasks-categorized-container"
+          class="cursor-grab rounded-lg"
+        >
           <app-task-card
             [task]="task"
             [nowTimestamp]="nowTimestamp"

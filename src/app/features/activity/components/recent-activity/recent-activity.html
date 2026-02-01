@@ -1,0 +1,38 @@
+<section class="recent-activity flex flex-col gap-3">
+  <h3 class="text-sm font-semibold text-slate-700">Recent Activity</h3>
+  <div
+    class="activity-list flex flex-col gap-2 overflow-y-auto pr-1 [scrollbar-width:thin]"
+  >
+    @if (activities().length === 0) {
+      <p class="text-sm text-slate-500 py-4 text-center">
+        No recent activity yet.
+      </p>
+    } @else {
+      @for (activity of activities(); track activity.id) {
+        <div
+          class="activity-item flex gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors border-gray-color"
+        >
+          <div
+            class="activity-icon flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm"
+            [ngClass]="getIconClass(activity.action)"
+          >
+            {{ getIcon(activity.action) }}
+          </div>
+          <div class="activity-content flex-1 min-w-0">
+            <p class="text-sm text-slate-800 leading-snug">
+              <span class="font-medium">"{{ activity.taskTitle }}"</span>
+              {{ getActionText(activity) }}
+              <span class="text-slate-600">{{ activity.assigneeName }}</span>
+            </p>
+            <p
+              class="text-xs text-slate-400 mt-1"
+              [title]="activity.timestamp | date: 'medium'"
+            >
+              {{ activity.timestamp | appRelativeTime }}
+            </p>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</section>

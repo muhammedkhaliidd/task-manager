@@ -85,14 +85,11 @@ body {
     font-size: 14px !important;
   }
   &.toast.toast--default {
-    border-left-color: var(--mat-sys-primary, #1976d2) !important;
+    border-left-color: var(--color-apple) !important;
   }
 
-  &.toast.toast--warn {
-    border-left-color: var(--mat-sys-error, #d32f2f) !important;
-  }
-
+  &.toast.toast--warn,
   &.toast.toast--error {
-    border-left-color: var(--mat-sys-error, #d32f2f) !important;
+    border-left-color: var(--color-red) !important;
   }
 }

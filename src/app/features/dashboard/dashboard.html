@@ -1,7 +1,20 @@
-<article class="dashboard p-8 flex flex-col gap-8">
+<article class="dashboard p-8 flex flex-col gap-8 relative">
   <app-dashboard-states></app-dashboard-states>
   <app-dashboard-filter></app-dashboard-filter>
-  <app-tasks-categorized-container
-    [nowTimestamp]="nowTimestamp()"
-  ></app-tasks-categorized-container>
+  <section class="tasks-section flex-1 min-w-0 min-h-0">
+    <app-tasks-categorized-container
+      [nowTimestamp]="nowTimestamp()"
+    ></app-tasks-categorized-container>
+  </section>
+
+  <!-- FAB: toggle Recent Activity overlay (overlay rendered at app level) -->
+  <button
+    mat-fab
+    class="activity-fab"
+    [attr.aria-label]="'Recent Activity'"
+    [matTooltip]="'Recent Activity'"
+    (click)="toggleActivityOverlay()"
+  >
+    <mat-icon>history</mat-icon>
+  </button>
 </article>

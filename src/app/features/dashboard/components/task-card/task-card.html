@@ -1,7 +1,10 @@
 @let taskTimeValue = task.dueDate | taskTime: nowTimestamp;
 <mat-card
-  class="task-card !rounded-lg !shadow-none !border-gray-color"
-  [ngClass]="[taskTimeValue?.backgroundClass || '!bg-white']"
+  class="task-card !rounded-lg !shadow-none"
+  [ngClass]="[
+    taskTimeValue?.backgroundClass || '!bg-white',
+    taskTimeValue?.borderClass,
+  ]"
 >
   <section
     class="task-card-content p-4"
