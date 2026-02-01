@@ -6,27 +6,23 @@
       <mat-spinner diameter="40"></mat-spinner>
     </div>
   } @else {
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-    >
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       @for (member of members(); track member.id) {
         <mat-card
           class="member-card !rounded-lg !shadow-sm border border-gray-200"
         >
-          <mat-card-content class="flex items-center gap-4 p-4">
+          <mat-card-content class="!flex items-center gap-4 p-4">
             <app-letters-circle-container
               [sentence]="member.name"
               [width]="48"
               [height]="48"
               [fontSize]="18"
             />
-            <div class="flex flex-col gap-0.5 min-w-0">
+            <div class="flex flex-col gap-0.5 min-w-0 break-words">
               <span class="font-semibold text-slate-800 truncate">{{
                 member.name
               }}</span>
-              <span class="text-sm text-slate-500 truncate">{{
-                member.email
-              }}</span>
+              <span class="text-sm text-slate-500">{{ member.email }}</span>
             </div>
           </mat-card-content>
         </mat-card>

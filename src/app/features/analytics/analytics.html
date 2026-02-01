@@ -1,1 +1,42 @@
-<h6 class="text-xl font-bold text-center p-4">Analytics page content</h6>
+<div class="analytics p-6 flex flex-col gap-8">
+  @if (tasksLoading()) {
+    <div class="flex flex-col items-center justify-center gap-4 py-12">
+      <mat-spinner diameter="40"></mat-spinner>
+      <span class="text-slate-500">Loading tasks...</span>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <section
+        class="chart-card bg-white rounded-lg border border-gray-200 p-6 shadow-sm"
+      >
+        <h3 class="text-lg font-semibold text-slate-800 mb-4">
+          Tasks by Priority
+        </h3>
+        <div class="h-[280px]">
+          <canvas
+            baseChart
+            type="doughnut"
+            [data]="priorityChartData()"
+            [options]="chartOptions"
+          ></canvas>
+        </div>
+      </section>
+
+      <section
+        class="chart-card bg-white rounded-lg border border-gray-200 p-6 shadow-sm"
+      >
+        <h3 class="text-lg font-semibold text-slate-800 mb-4">
+          Tasks by Status
+        </h3>
+        <div class="h-[280px]">
+          <canvas
+            baseChart
+            type="doughnut"
+            [data]="statusChartData()"
+            [options]="chartOptions"
+          ></canvas>
+        </div>
+      </section>
+    </div>
+  }
+</div>

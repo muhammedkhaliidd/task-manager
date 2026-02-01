@@ -16,6 +16,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { cacheInterceptor } from './core/interceptors/cache.interceptor';
 import { retryInterceptor } from './core/interceptors/retry.interceptor';
 import { CoreModule } from './core/core.module';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 /**
  * Application configuration for dependency injection
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withInterceptors([cacheInterceptor, retryInterceptor])),
+    provideCharts(withDefaultRegisterables()),
     importProvidersFrom(CoreModule),
     provideRouter(routes),
     provideEffects(),
