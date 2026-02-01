@@ -6,6 +6,16 @@ Angular 20 task management application.
 
 Task Manager is a Senior Angular application for managing tasks with a modern, signal-based architecture.
 
+### Key Features
+
+- **Task Board** – Kanban-style columns (To Do, In Progress, Done) with drag-and-drop between columns
+- **Task CRUD** – Create, edit, delete tasks with assignee, priority, due date, tags
+- **Filtering & Search** – By status, priority, assignee; real-time search in titles and descriptions
+- **Statistics Cards** – Total, completed, in-progress, overdue tasks
+- **Task Analytics** – Chart.js doughnut charts for distribution by priority and status
+- **Recent Activity Feed** – FAB-triggered overlay showing create/update/delete/status-change events
+- **Team Management** – User list for task assignment (mock data)
+
 ### Key Technologies
 
 - **Angular 20** – Standalone components, Signals, OnPush change detection
@@ -63,6 +73,18 @@ src/app/
 
 3. Start the application (see [Available scripts and commands](#available-scripts-and-commands)).
 
+### Mock Data
+
+The app uses `db.json` at the project root. json-server serves it on port 3000. The file is pre-populated with tasks and statistics; no data generation step is required to run the app.
+
+To regenerate mock data with fresh dates (e.g. before submission), run the assignment data generator:
+
+```bash
+node senior-frontend-test/data-fetching/generate-data.js
+```
+
+This writes `tasks.json` and `statistics.json` to `senior-frontend-test/data-fetching/`. To use that data, copy or merge it into `db.json` (the app expects `{ tasks: [...], statistics: [...] }`).
+
 ---
 
 ## Environment Configuration
@@ -105,6 +127,7 @@ Add the `X-Skip-Cache: true` header to any GET request to bypass the cache inter
 | `npm run lint:fix` | Runs ESLint with auto-fix |
 | `npm run format` | Formats code with Prettier |
 | `npm run format:check` | Checks formatting without writing |
+| `npm run prepare` | Runs automatically on `npm install`; configures Husky for pre-commit hooks |
 
 ---
 
@@ -114,6 +137,7 @@ Add the `X-Skip-Cache: true` header to any GET request to bypass the cache inter
 
 - **TASKS_STORE** (`features/tasks/store/`): Tasks, statistics, filters, loading states; computed signals for filtered and categorized tasks
 - **TEAM_STORE** (`features/team/store/`): Team members and loading state
+- **ACTIVITY_STORE** (`features/activity/store/`): Recent activity items for the feed (client-side only)
 
 Stores use `withState`, `withComputed`, and `withMethods` for reactive updates. No Actions, Reducers, or Effects.
 
