@@ -4,13 +4,14 @@ import { NgClass, DatePipe } from '@angular/common';
 import { ACTIVITY_STORE } from '../../store/activity-store';
 import { RelativeTimePipe } from '../../../../shared/pipes/relative-time.pipe';
 import { ActivityAction, ActivityItem } from '../../models/activity.model';
+import { MatDividerModule } from '@angular/material/divider';
 
 /**
  * Recent activity feed component
  */
 @Component({
   selector: 'app-recent-activity',
-  imports: [NgClass, DatePipe, RelativeTimePipe],
+  imports: [NgClass, DatePipe, RelativeTimePipe, MatDividerModule],
   templateUrl: './recent-activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -9,7 +9,7 @@
     [value]="filterType"
     (valueChange)="onFilterTypeChange($event)"
   >
-    @for (item of filterTaskStateItems; track item) {
+    @for (item of filterTaskStateItems; track item.value) {
       <mat-button-toggle
         [value]="item.value"
         class="!border-0 !rounded-sm !text-xs"
