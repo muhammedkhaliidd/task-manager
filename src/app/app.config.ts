@@ -12,7 +12,9 @@ import { routes } from './app.routes';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { cacheInterceptor } from './core/interceptors/cache.interceptor';
+import { retryInterceptor } from './core/interceptors/retry.interceptor';
 import { CoreModule } from './core/core.module';
 
 /**
@@ -30,7 +32,7 @@ export const appConfig: ApplicationConfig = {
     provideNativeDateAdapter(),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([cacheInterceptor, retryInterceptor])),
     importProvidersFrom(CoreModule),
     provideRouter(routes),
     provideEffects(),
