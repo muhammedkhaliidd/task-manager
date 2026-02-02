@@ -1,11 +1,11 @@
 <section
-  class="dashboard-filter flex items-center justify-between gap-4 bg-white p-4 rounded-lg shadow-md"
+  class="dashboard-filter flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-lg shadow-md"
 >
   <mat-button-toggle-group
     name="dashboard-filter"
     aria-label="Dashboard Filter"
     [hideSingleSelectionIndicator]="true"
-    class="dashboard-filter-group !border-0 !rounded-none flex items-center gap-2 h-fit"
+    class="dashboard-filter-group !border-0 !rounded-none flex items-center gap-2 h-fit !flex-wrap"
     [value]="filterType"
     (valueChange)="onFilterTypeChange($event)"
   >
@@ -19,7 +19,7 @@
     }
   </mat-button-toggle-group>
 
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 flex-wrap">
     <!-- Priority Filter -->
     <app-custom-select
       class="!max-w-[120px]"

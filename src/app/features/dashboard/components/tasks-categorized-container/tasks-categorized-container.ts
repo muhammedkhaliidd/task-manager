@@ -9,7 +9,6 @@ import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { TASKS_STORE } from '../../../tasks/store/tasks-store';
 import { Task } from '../../../tasks/models/tasks.model';
 import { TasksCategoryContainer } from '../tasks-category-container/tasks-category-container';
-
 /**
  * Tasks categorized container component
  */

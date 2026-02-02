@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 import { SideNav } from './core/components/side-nav/side-nav';
 import { AppHeader } from './core/components/app-header/app-header';
 import { AppFooter } from './core/components/app-footer/app-footer';
@@ -17,7 +18,14 @@ import { ActivityOverlay } from './features/activity/components/activity-overlay
  */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AppHeader, AppFooter, SideNav, ActivityOverlay],
+  imports: [
+    RouterOutlet,
+    CdkScrollable,
+    AppHeader,
+    AppFooter,
+    SideNav,
+    ActivityOverlay,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
